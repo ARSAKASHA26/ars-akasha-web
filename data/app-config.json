@@ -1,0 +1,25 @@
+{
+  "app": "ARS AKASHA",
+  "brand": "Biblioteca viva",
+  "whatsapp": {
+    "countryCode": "55",
+    "areaCode": "44",
+    "number": "997038883",
+    "waMe": "5544997038883",
+    "label": "(44) 99703-8883"
+  },
+  "pix": {
+    "key": "59544857000115",
+    "holder": "YB DE SOUZA LTDA"
+  },
+  "leadCapture": {
+    "requiredFields": ["name", "email", "whatsapp", "birthDate", "birthTime", "birthCity", "marketingConsent"],
+    "storage": "localStorage",
+    "localStorageKey": "akasha-leads",
+    "nextStep": "conectar planilha, banco de dados ou CRM antes da publicacao final"
+  },
+  "publicExperience": {
+    "showInternalLibrary": false,
+    "checkout": "whatsapp"
+  }
+}

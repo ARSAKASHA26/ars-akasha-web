@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARS AKASHA</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar" aria-label="Navegacao principal">
+        <div class="brand">
+          <img class="brand-mark" src="assets/ars-akasha-logo.jpeg" alt="Logo ARS AKASHA">
+          <div>
+            <strong>ARS AKASHA</strong>
+            <span>Biblioteca viva</span>
+          </div>
+        </div>
+
+        <nav class="module-nav admin-only" id="moduleNav" aria-label="Camadas" hidden></nav>
+
+        <section class="sidebar-public" aria-label="Resumo da leitura ARS AKASHA">
+          <p class="eyebrow">Biblioteca viva</p>
+          <h2>Conhecer. Transformar. Transcender.</h2>
+          <p>O ARS AKASHA une nascimento, simbolos espirituais e oraculos para abrir uma primeira visao sobre caminho, protecao e bem-estar.</p>
+          <div class="sidebar-highlight">
+            <strong>Leitura inicial gratuita</strong>
+            <span>A primeira mensagem aparece no formulario ao lado.</span>
+          </div>
+          <div class="sidebar-store">
+            <img src="assets/akasha-mistica.jpeg" alt="Akasha Mistica">
+            <div>
+              <strong>Akasha Mistica</strong>
+              <span>Cristais, incensos, ervas e produtos espirituais para acompanhar sua leitura.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="vault-status admin-only" aria-label="Metodo protegido" hidden>
+          <span class="status-dot"></span>
+          <div>
+            <strong id="vaultCount">Metodo protegido</strong>
+            <span>camadas reveladas nos estudos</span>
+          </div>
+        </section>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Akasha Digital</p>
+            <h1>Mapa Espiritual ARS AKASHA</h1>
+            <p class="topbar-subtitle">Descubra uma primeira mensagem sobre seu caminho, seu anjo guardiao, sua numerologia e os sinais espirituais que se abrem a partir do seu nascimento.</p>
+          </div>
+          <div class="actions">
+            <button class="icon-button" id="themeToggle" type="button" title="Alternar tema" aria-label="Alternar tema">
+              <span aria-hidden="true">◐</span>
+            </button>
+            <button class="primary-button admin-only" id="newNoteButton" type="button" hidden>Nova nota</button>
+          </div>
+        </header>
+
+        <section class="conversion-hero" aria-label="Apresentacao da leitura gratuita">
+          <div class="hero-copy">
+            <p class="eyebrow">Leitura gratuita</p>
+            <h2>Receba uma primeira leitura espiritual feita a partir dos seus dados de nascimento.</h2>
+            <p>Em poucos segundos, o ARS AKASHA revela sinais iniciais do seu caminho: anjo guardiao, numerologia, Odu Ori, ascendente, oraculos, chakra, pedra, cor, salmo e uma pratica simples de bem-estar.</p>
+            <div class="hero-benefits" aria-label="O que a leitura mostra">
+              <span><img src="assets/ars-akasha-logo.jpeg" alt="">Anjo guardiao</span>
+              <span><img src="assets/ars-akasha-logo.jpeg" alt="">Odu Ori</span>
+              <span><img src="assets/ars-akasha-logo.jpeg" alt="">Numerologia</span>
+              <span><img src="assets/ars-akasha-logo.jpeg" alt="">Tarot e Cigano</span>
+              <span><img src="assets/ars-akasha-logo.jpeg" alt="">Chakra e pedra</span>
+              <span><img src="assets/ars-akasha-logo.jpeg" alt="">Compra pelo WhatsApp</span>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <img class="hero-brand-image" src="assets/akasha-mistica.jpeg" alt="">
+            <div class="daily-message-card">
+              <span>Mensagem do dia</span>
+              <strong>Nem todo sinal chega como resposta. Alguns chegam como chamado.</strong>
+              <p>Comece pela leitura gratuita e observe qual parte do seu caminho pede mais atencao hoje.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="intake-layout" aria-label="Consulta espiritual">
+          <form class="intake-panel" id="intakeForm">
+            <div class="panel-header compact">
+              <div>
+                <p class="eyebrow">Consulta</p>
+                <h2>Gerar minha leitura inicial gratuita</h2>
+              </div>
+              <span class="result-count">Gratuito</span>
+            </div>
+            <div class="form-grid">
+              <label>
+                Nome completo
+                <input id="clientName" type="text" autocomplete="name" placeholder="Nome completo" required>
+              </label>
+              <label>
+                E-mail
+                <input id="clientEmail" type="email" autocomplete="email" placeholder="email@exemplo.com" required>
+              </label>
+              <label>
+                WhatsApp
+                <input id="clientWhatsApp" type="tel" autocomplete="tel" placeholder="(00) 00000-0000" required>
+              </label>
+              <label>
+                Data de nascimento
+                <input id="birthDate" type="date" required>
+              </label>
+              <label>
+                Hora de nascimento
+                <input id="birthTime" type="time" required>
+              </label>
+              <label class="wide-field">
+                Cidade onde nasceu
+                <input id="birthCity" type="text" autocomplete="address-level2" placeholder="Ex.: Sao Paulo, SP" required>
+              </label>
+              <label class="wide-field consent-field">
+                <input id="marketingConsent" type="checkbox" required>
+                <span>Autorizo receber mensagens, ofertas e novidades do ARS AKASHA pelo WhatsApp e e-mail.</span>
+              </label>
+            </div>
+            <div class="intake-actions">
+              <button class="primary-button" type="submit">Gerar leitura inicial GRATIS</button>
+              <button class="ghost-button" id="clearReadingButton" type="button">Limpar</button>
+            </div>
+          </form>
+
+          <article class="reading-panel" id="readingPanel" aria-live="polite">
+            <p class="eyebrow">Resultado</p>
+            <h2>Primeira leitura pronta para nascer</h2>
+            <p class="detail-summary">Preencha seus dados para receber uma primeira leitura espiritual com sinais do seu caminho, numero de sorte, anjo guardiao, oraculos e praticas de bem-estar.</p>
+            <div class="offer-strip">
+              <strong>Depois da leitura gratuita</strong>
+              <span>Voce podera escolher um estudo mais profundo pelo WhatsApp.</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="plans-section admin-only" id="plansSection" aria-label="Planos de relatorio" hidden>
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Relatorio completo</p>
+              <h2>Escolha a profundidade da leitura</h2>
+            </div>
+            <span class="result-count">WhatsApp</span>
+          </div>
+          <div class="plans-grid" id="plansGrid"></div>
+          <div class="checkout-panel" id="checkoutPanel" aria-live="polite">
+            <strong>Pedido</strong>
+            <span>Gere uma leitura e selecione um estudo para continuar pelo WhatsApp.</span>
+          </div>
+        </section>
+
+        <section class="search-band admin-only" aria-label="Busca" hidden>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Buscar por tema espiritual, caminho ou pratica">
+          </label>
+          <div class="quick-filters" id="quickFilters"></div>
+        </section>
+
+        <section class="overview-grid admin-only" aria-label="Resumo dos modulos" hidden>
+          <article class="metric">
+            <span>Trilhas</span>
+            <strong id="metricModules">0</strong>
+          </article>
+          <article class="metric">
+            <span>Entidades</span>
+            <strong id="metricEntities">0</strong>
+          </article>
+          <article class="metric">
+            <span>Ferramentas</span>
+            <strong id="metricTools">0</strong>
+          </article>
+          <article class="metric">
+            <span>Notas</span>
+            <strong id="metricNotes">0</strong>
+          </article>
+          <article class="metric">
+            <span>Leads</span>
+            <strong id="metricLeads">0</strong>
+          </article>
+        </section>
+
+        <section class="content-layout admin-only" hidden>
+          <div class="library-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Estudos</p>
+                <h2 id="listTitle">Camadas do estudo</h2>
+              </div>
+              <span id="resultCount" class="result-count">0</span>
+            </div>
+            <div class="record-list" id="recordList"></div>
+          </div>
+
+          <article class="detail-panel" id="detailPanel" aria-live="polite"></article>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="note-dialog" id="noteDialog">
+      <form method="dialog">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">Caderno</p>
+            <h2>Nova nota</h2>
+          </div>
+          <button class="icon-button" value="cancel" type="submit" aria-label="Fechar">×</button>
+        </div>
+        <label>
+          Titulo
+          <input id="noteTitle" type="text" placeholder="Ex.: Insight sobre Odu e casa 9">
+        </label>
+        <label>
+          Conteudo
+          <textarea id="noteBody" rows="8" placeholder="Registre a percepcao, fonte ou proximo estudo"></textarea>
+        </label>
+        <div class="dialog-actions">
+          <button class="ghost-button" value="cancel" type="submit">Cancelar</button>
+          <button class="primary-button" id="saveNoteButton" value="default" type="button">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
