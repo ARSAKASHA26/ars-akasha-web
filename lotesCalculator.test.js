@@ -138,11 +138,11 @@ assert("Coragem → Leão",       L(calcD,"coragem").posicao.signo === "Leão");
 console.log();
 
 console.log("4. Mapa DIURNO — Vitória, Nemesis, Infortúnio");
-// Vitória (diurno) = ASC + Espírito − Júpiter = 60 + 151 − 0 = 211°
-assertDeg("Vitória    = ASC + Espírito − Júpiter", L(calcD,"vitoria").grauAbsoluto,    211);
+// Vitória (diurno) = ASC + Júpiter − Espírito = 60 + 0 − 151 = −91 → 269°
+assertDeg("Vitória    = ASC + Júpiter − Espírito", L(calcD,"vitoria").grauAbsoluto,    269);
 assertDeg("Nemesis    = ASC + Fortuna − Saturno",  L(calcD,"nemesis").grauAbsoluto,     59);
 assertDeg("Infortúnio = ASC + Marte − Saturno",    L(calcD,"infortunio").grauAbsoluto, 330);
-assert("Vitória → Escorpião",  L(calcD,"vitoria").posicao.signo === "Escorpião");
+assert("Vitória → Sagitário",  L(calcD,"vitoria").posicao.signo === "Sagitário");
 assert("Nemesis → Touro",      L(calcD,"nemesis").posicao.signo === "Touro");
 assert("Infortúnio → Peixes",  L(calcD,"infortunio").posicao.signo === "Peixes");
 // Morte = ASC + Casa8 − Lua = 60 + 240 − 150 = 150° → Virgem 00°
@@ -160,7 +160,7 @@ assertDeg("Espírito    (noturno) = ASC + Lua − Sol",       L(calcN,"espirito"
 assertDeg("Eros        (noturno) = ASC + Espírito − Vênus",L(calcN,"eros").grauAbsoluto,         300);
 assertDeg("Necessidade (noturno) = ASC + Mercúrio − Fort", L(calcN,"necessidade").grauAbsoluto,  230);
 assertDeg("Coragem     (noturno) = ASC + Marte − Fortuna", L(calcN,"coragem").grauAbsoluto,      120);
-assertDeg("Vitória     (noturno) = ASC + Júpiter − Espír", L(calcN,"vitoria").grauAbsoluto,      150);
+assertDeg("Vitória     (noturno) = ASC + Espírito − Júpiter", L(calcN,"vitoria").grauAbsoluto,   90);
 assertDeg("Nemesis     (noturno) = ASC + Saturno − Fort",  L(calcN,"nemesis").grauAbsoluto,      170);
 assertDeg("Infortúnio  (noturno) = ASC + Saturno − Marte", L(calcN,"infortunio").grauAbsoluto,  350);
 // Morte = ASC + Casa8 − Lua = 300 + 120 − 200 = 220° → Escorpião 10°

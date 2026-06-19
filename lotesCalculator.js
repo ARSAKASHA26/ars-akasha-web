@@ -179,11 +179,11 @@ function calcularLotes(planetas) {
     {
       id:      "vitoria",
       nome:    "Vitória (Nike)",
-      // Ars Akasha: diurno usa Espírito − Júpiter (confirmar com Mago se fonte difere)
-      formula: diurno ? "ASC + Espírito − Júpiter" : "ASC + Júpiter − Espírito",
+      // Paulus Alexandrinus / Chris Brennan / Codex: diurno = Júpiter − Espírito
+      formula: diurno ? "ASC + Júpiter − Espírito" : "ASC + Espírito − Júpiter",
       grau:    normalizeDeg(diurno
-        ? asc + espirito - jupiter
-        : asc + jupiter - espirito),
+        ? asc + jupiter - espirito
+        : asc + espirito - jupiter),
     },
     {
       id:      "nemesis",
