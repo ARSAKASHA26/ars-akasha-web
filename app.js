@@ -149,24 +149,9 @@ const plans = [
     ],
   },
   {
-    id: "resumo-roda-de-samsara",
-    name: "Resumo da Roda de Samsara",
-    price: "R$ 18,90",
-    badge: "Karmico",
-    summary: "Uma leitura breve e direta sobre o padrao que se repete, o ponto cego que mantem a roda girando e o primeiro passo para mudar.",
-    features: [
-      "A Roda Principal",
-      "O Desejo da Alma",
-      "Apego, aversao e ignorancia",
-      "No karmico",
-      "Medo e ganho oculto",
-      "Caminho pratico de despertar",
-    ],
-  },
-  {
     id: "dossie-roda-de-samsara",
     name: "Dossie da Roda de Samsara",
-    price: "R$ 57,90",
+    price: "R$ 69,90",
     badge: "Karmico",
     summary: "Um estudo mais completo sobre o ciclo que se repete, o desejo da alma, o medo oculto, o ganho inconsciente e a virtude de libertacao.",
     features: [
@@ -176,21 +161,6 @@ const plans = [
       "Reino predominante",
       "Medo e ganho oculto",
       "Portal da proxima fase",
-    ],
-  },
-  {
-    id: "roda-de-samsara-profunda",
-    name: "Roda de Samsara Profunda",
-    price: "R$ 198,90",
-    badge: "Premium Karmico",
-    summary: "Uma leitura karmica aprofundada para compreender repeticoes, pontos cegos, nos emocionais e caminhos de despertar com orientacao mais detalhada.",
-    features: [
-      "Dossie completo da roda",
-      "Analise profunda dos padroes",
-      "Desejo da alma e no karmico",
-      "Medo, ganho oculto e ponto cego",
-      "Virtude de libertacao",
-      "Plano pratico de despertar",
     ],
   },
   {
@@ -301,7 +271,7 @@ const plans = [
   {
     id: "seis-odus-que-regem-sua-vida",
     name: "Os 6 Odus que Regem sua Vida",
-    price: "R$ 150,90",
+    price: "R$ 279,90",
     badge: "Odus",
     summary: "Revela os 6 Odus que influenciam sua existencia, seus aprendizados, desafios, potenciais e caminhos espirituais.",
     features: [

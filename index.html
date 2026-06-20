@@ -69,6 +69,24 @@
           </div>
         </header>
 
+        <div class="daily-energy-card" id="dailyEnergyCard">
+          <div class="daily-energy-body">
+            <p class="eyebrow">Sua energia hoje</p>
+            <p class="daily-energy-text" id="dailyEnergyText"></p>
+          </div>
+          <div class="daily-energy-streak" id="dailyEnergyStreak" hidden>
+            <span id="streakCount">1</span>
+            <small id="streakLabel">dia seguido</small>
+          </div>
+        </div>
+
+        <nav class="page-tabs" aria-label="Secoes do site">
+          <button class="page-tab active" data-tab="leitura" type="button">Leitura gratuita</button>
+          <button class="page-tab" data-tab="estudos" type="button">Estudos</button>
+          <button class="page-tab" data-tab="ebooks" type="button">E-books</button>
+        </nav>
+
+        <div class="tab-panel" id="tab-leitura">
         <section class="conversion-hero" aria-label="Apresentacao da leitura gratuita">
           <div class="hero-copy">
             <p class="eyebrow">Leitura gratuita</p>
@@ -209,6 +227,57 @@
 
           <article class="detail-panel" id="detailPanel" aria-live="polite"></article>
         </section>
+        </div><!-- /tab-leitura -->
+
+        <div class="tab-panel" id="tab-estudos" hidden>
+          <section class="estudos-intro" aria-label="Como funciona">
+            <p class="eyebrow">Estudos personalizados</p>
+            <h2>Feito a partir dos seus dados de nascimento</h2>
+            <p class="topbar-subtitle">Cada estudo e construido individualmente para voce. Nao e conteudo generico: e uma leitura com seu nome, sua data, sua cidade e seu caminho.</p>
+            <div class="estudos-steps">
+              <div class="estudos-step">
+                <span>1</span>
+                <div>
+                  <strong>Voce escolhe e envia seus dados</strong>
+                  <p>Nome completo, data, hora e cidade de nascimento. Quanto mais preciso, mais profunda a leitura.</p>
+                </div>
+              </div>
+              <div class="estudos-step">
+                <span>2</span>
+                <div>
+                  <strong>O estudo e preparado sob medida</strong>
+                  <p>Cruzamos diferentes sistemas simbolicos com seus dados reais. Cada entrega e unica.</p>
+                </div>
+              </div>
+              <div class="estudos-step">
+                <span>3</span>
+                <div>
+                  <strong>Receba em PDF pelo WhatsApp</strong>
+                  <p>O atendimento confirma o pedido, combina o pagamento via Pix e entrega o PDF completo.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="plans-section" aria-label="Estudos disponiveis">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Escolha o estudo</p>
+                <h2>Estudos disponiveis</h2>
+              </div>
+              <span class="result-count">WhatsApp</span>
+            </div>
+            <div class="estudos-grid" id="estudosGrid"></div>
+          </section>
+        </div><!-- /tab-estudos -->
+
+        <div class="tab-panel" id="tab-ebooks" hidden>
+          <section class="ebooks-intro" aria-label="E-books digitais">
+            <p class="eyebrow">E-books digitais</p>
+            <h2>Produtos prontos para leitura e pratica</h2>
+            <p class="topbar-subtitle">Conteudo em PDF, entregue pelo WhatsApp apos confirmacao do pagamento via Pix. Nao sao personalizados — sao estudos completos prontos para voce aplicar.</p>
+          </section>
+          <div class="ebooks-grid" id="ebooksGrid"></div>
+        </div><!-- /tab-ebooks -->
       </main>
     </div>
 
@@ -236,6 +305,18 @@
       </form>
     </dialog>
 
+    <dialog class="milestone-dialog" id="milestoneDialog">
+      <div class="milestone-content">
+        <p class="eyebrow">Conquista desbloqueada</p>
+        <h2 id="milestoneTitle"></h2>
+        <p class="milestone-body">Voce visitou o ARS AKASHA por varios dias seguidos — isso significa que o seu caminho esta em movimento. Como reconhecimento, voce ganhou uma tiragem gratuita no app de Oraculos ARS AKASHA.</p>
+        <div class="milestone-actions">
+          <a class="primary-button link-button" id="milestoneWhatsApp" href="#" target="_blank" rel="noreferrer">Falar no WhatsApp para receber seu codigo</a>
+          <button class="ghost-button" id="milestoneClose" type="button">Fechar</button>
+        </div>
+      </div>
+    </dialog>
+
     <!-- Formulario oculto para Netlify Forms - captura leads -->
     <form name="leads-ars-akasha" data-netlify="true" hidden>
       <input type="text" name="lead-id">
@@ -251,5 +332,468 @@
     </form>
 
     <script src="app.js"></script>
+    <script>
+    (function () {
+
+      // ── helpers ───────────────────────────────────────────
+      function lsGet(k) { try { return localStorage.getItem(k); } catch(e) { return null; } }
+      function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
+
+      // ── date helpers ──────────────────────────────────────
+      function dateStr(d) {
+        return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+      }
+      function todayStr() { return dateStr(new Date()); }
+      function yesterdayStr() { var d = new Date(); d.setDate(d.getDate() - 1); return dateStr(d); }
+
+      // ── numerology reduction ──────────────────────────────
+      function reduce(n) {
+        while (n > 9) {
+          n = String(n).split('').reduce(function (a, d) { return a + parseInt(d, 10); }, 0);
+        }
+        return n || 1;
+      }
+
+      // ── variant picker (sem repeticao ate esgotar o ciclo) ─
+      function pickVariant(lsKey, variants) {
+        var seen = [];
+        try { seen = JSON.parse(lsGet(lsKey) || '[]'); } catch(e) { seen = []; }
+        if (!Array.isArray(seen)) seen = [];
+        var available = [];
+        for (var i = 0; i < variants.length; i++) {
+          if (seen.indexOf(i) === -1) available.push(i);
+        }
+        if (available.length === 0) {
+          seen = [];
+          available = [];
+          for (var j = 0; j < variants.length; j++) available.push(j);
+        }
+        var pick = available[Math.floor(Math.random() * available.length)];
+        seen.push(pick);
+        lsSet(lsKey, JSON.stringify(seen));
+        return variants[pick];
+      }
+
+      // ── energy messages (12 variantes por numero) ─────────
+      var personal = {
+        1: [
+          "Sua energia hoje pede movimento. Antes de esperar que alguem abra o caminho, pergunte: qual passo voce tem adiado? O campo esta aberto — o que falta e o primeiro gesto.",
+          "Hoje o campo e seu. Algo que ficou na cabeca por tempo demais pede para sair do planejamento e entrar na vida real. Comece pequeno, comece agora.",
+          "Sua energia de hoje nao combina com espera. Uma direcao escolhida com intencao — mesmo que imperfeita — vale mais do que a paralisia do momento ideal que nunca chega.",
+          "O numero 1 pede inicio. Nao e o momento de revisar o que ja existe — e o momento de criar algo que ainda nao esta la. Qual e o gesto inaugural do seu dia?",
+          "Hoje voce carrega a vibracão do pioneiro. Use isso: abra uma conversa que foi adiada, tome uma decisao que ficou suspensa, ou simplesmente declare internamente o que voce quer.",
+          "Energia de 1 nao permite neutralidade. Ou voce lanca algo novo hoje, ou o campo fica parado esperando voce. Qual e a sua proxima acao?",
+          "Hoje o universo apoia quem age primeiro. Nao espere sinal — voce ja e o sinal. O que voce pode colocar em movimento antes do fim do dia?",
+          "Sua energia pessoal hoje e de lideranca interior. Ninguem pode dar o seu primeiro passo por voce. A coragem que voce procura esta no proprio ato de comecar.",
+          "O campo de hoje pede que voce se posicione. Uma opiniao verdadeira dita no momento certo, uma escolha feita sem negociar sua essencia — isso e energia de 1 bem usada.",
+          "Hoje voce nao precisa de permissao. O que voce tem carregado como projeto, desejo ou ideia pede espaco no mundo real. Existe algo esperando o seu sim.",
+          "Sua energia pessoal hoje vibra no ponto de partida. Nao importa o que ficou para tras — o que vale e o que voce decide agora sobre o que vem a seguir.",
+          "O dia pede coragem simples: um gesto honesto, uma decisao que so voce pode tomar, um comeco que o tempo nao vai fazer por voce."
+        ],
+        2: [
+          "Hoje o seu campo pede escuta antes de resposta. O que esta acontecendo ao redor carrega informacao. Nao force; observe o ritmo das coisas e confie que seu momento esta sendo construido em silencio.",
+          "Sua energia hoje e de parceria e sutileza. O que parece lento esta amadurecendo. Confie no processo e preste atencao nas mensagens que chegam de formas inesperadas.",
+          "Hoje o campo pede que voce receba, nao apenas entregue. Permita-se ser apoiado. A forca de hoje nao esta na acao, mas na sensibilidade de perceber o que esta disponivel para voce.",
+          "Energia de 2 e energia de ponte. Voce esta conectando pessoas, ideias ou momentos sem perceber. Preste atencao no que e pedido sem palavras ao seu redor.",
+          "Hoje o campo favorece a cooperacao. Algo que parecia um problema seu pode se resolver com mais leveza se voce permitir que alguem caminhe junto.",
+          "Sua energia pessoal hoje pede paciencia com o tempo das coisas. O que esta crescendo nao aparece de uma hora pra outra — mas esta crescendo. Confie.",
+          "Hoje o campo fala mais baixo. Reduza o ruido interno, abra espaco para o que esta ao redor, e voce vai perceber informacoes que normalmente passariam despercebidas.",
+          "Energia de 2 pede diplomacia. Nao e o dia de confronto — e o dia de encontrar o ponto em comum que permite que as coisas avancem sem desgaste desnecessario.",
+          "Hoje voce e o mediador — entre pessoas, entre partes de si mesmo, entre o que foi e o que vem. Essa funcao tem mais poder do que parece.",
+          "Sua energia hoje convida ao cuidado com o outro. Um gesto simples de atencao genuina pode mudar o tom de um relacionamento inteiro.",
+          "O campo de hoje pede sensibilidade antes de logica. A resposta que voce busca pode estar mais no campo emocional do que no racional.",
+          "Hoje e dia de ouvir o que nao e dito. A mensagem mais importante pode estar no silencio de alguem, no gesto pequeno, na intuicao que aparece antes do pensamento."
+        ],
+        3: [
+          "Sua energia hoje esta ligada a voz e ao que voce cria. Fale com clareza o que precisa ser dito. Uma palavra verdadeira dita no tempo certo vale mais que dez mensagens vagas.",
+          "O campo de hoje favorece expressao. Algo que voce carrega internamente quer ser dito, criado ou compartilhado. Nao adie essa entrega — o mundo precisa do que so voce tem.",
+          "Hoje sua energia pede contato real. Uma conversa honesta ou um gesto criativo simples podem mudar o rumo do seu dia — e do de quem esta ao redor.",
+          "Energia de 3 e energia de presenca. Aparecer de verdade — com humor, com verdade, com entusiasmo — e o seu maior dom hoje. Nao se contenha.",
+          "Hoje o campo favorece a criatividade como ferramenta de cura. O que voce pode criar, expressar ou compartilhar que va aliviar um peso proprio ou alheio?",
+          "Sua energia hoje pede leveza e contato. Nao tudo precisa ser serio. As vezes a mensagem mais poderosa vem embrulhada num sorriso genuino.",
+          "O campo de hoje e fertil para expressao autentica. O que voce tem guardado que poderia, finalmente, ser dito ou mostrado? Nao e o momento de esconder.",
+          "Energia de 3 nao combina com isolamento. Faca contato, compartilhe algo que importa para voce, deixe sua presenca ser sentida de forma real.",
+          "Hoje sua voz tem peso. Use isso com consciencia: uma palavra de incentivo, uma narrativa honesta, um gesto criativo podem plantar sementes que crescem por anos.",
+          "O campo de hoje pede que voce seja o canal — da alegria, da informacao, da inspiracao. Nao segure o que precisa circular.",
+          "Sua energia pessoal hoje vibra em frequencia de expansao social. Nao e dia de se recolher — e dia de se conectar com o que e vivo ao redor de voce.",
+          "Hoje a expressao e medicina. O que voce cria, diz ou compartilha com intencao verdadeira tem o poder de transformar o ambiente ao redor."
+        ],
+        4: [
+          "Hoje seu campo pede organizacao e presenca no concreto. Nao e dia de grandes voos — e dia de cuidar do que sustenta. O que precisa ser arrumado, finalizado ou colocado no lugar?",
+          "Sua energia hoje e de construcao. O que voce esta erguendo pede atencao no detalhe e disciplina no ritmo. O que e feito com cuidado hoje sustenta o que vem depois.",
+          "O campo de hoje pede aterramento. Resolva o pratico, organize o visivel, feche o que ficou aberto. Existe uma satisfacao profunda em colocar ordem nas coisas que sustentam sua vida.",
+          "Energia de 4 e a energia do fundamento. Nao subestime o dia ordinario — a consistencia e o que separa quem constroi de quem apenas planeja.",
+          "Hoje o campo recompensa quem faz o basico bem feito. Nao e o dia da grande jogada — e o dia de garantir que o que ja existe esta solido.",
+          "Sua energia pessoal hoje pede presenca no corpo e no espaco fisico. Cuide do ambiente, cuide da saude, cuide do que e concreto. O espiritual tambem precisa de raiz.",
+          "O campo de hoje favorece o trabalho silencioso e comprometido. O que voce faz sem plateia hoje e o que vai sustentar o que vem amanha.",
+          "Energia de 4 pede responsabilidade — com o tempo, com os compromissos, com o que foi prometido. Honrar o que ficou pendente e um ato de integridade.",
+          "Hoje e dia de construcao e nao de revolucao. Coloque um tijolo no lugar certo, cuide do que precisa de manutencao, feche o que ficou pela metade.",
+          "Sua energia hoje pede disciplina amorosa. Nao se trata de rigidez — e de se perguntar o que, feito agora com atencao, cria espaco para o que voce quer no futuro.",
+          "O campo de hoje recompensa constancia. Um pequeno avanco consistente vale mais do que uma grande arrancada seguida de pausa.",
+          "Hoje o que precisa de atencao e o que ja esta em andamento. Finalize, revise, ajuste. A solidez do que voce esta construindo depende de quanto voce cuida do que ja existe."
+        ],
+        5: [
+          "Sua energia hoje e inquieta por natureza. Em vez de resistir a agitacao, pergunte o que precisa mudar de verdade. Um ajuste pequeno feito hoje pode abrir uma rota inteira.",
+          "Hoje o campo pede movimento e abertura. Se algo parece estagnado, e sinal de que uma mudanca de angulo e necessaria. O que voce pode fazer diferente hoje?",
+          "Sua energia de hoje nao combina com rotina rigida. Permita-se sair do caminho habitual. As vezes um desvio pequeno revela o melhor atalho.",
+          "Energia de 5 pede liberdade e adaptacao. O que voce esta segurando por medo de mudar pode ser exatamente o que esta impedindo o proximo nivel.",
+          "Hoje o campo favorece quem esta disposto a experimentar. Nao e o momento de certezas — e o momento de curiosidade ativa.",
+          "Sua energia pessoal hoje vibra em frequencia de transformacao. Resista ao impulso de manter tudo igual so por conforto. Alguma coisa precisa se mover.",
+          "O campo de hoje pede versatilidade. Seja o que o momento pede, nao o que o habito manda. Voce tem mais flexibilidade do que imagina.",
+          "Energia de 5 nao e impulsividade — e discernimento em movimento. Qual mudanca, feita hoje com consciencia, abre o campo para o que voce realmente quer?",
+          "Hoje e dia de romper padrao. Uma acao diferente, uma conversa fora do roteiro, uma escolha que o medo costumava evitar — esse e o convite do campo.",
+          "Sua energia hoje pede coragem de mudar sem saber exatamente onde vai chegar. A confianca no processo e o que sustenta a mudanca verdadeira.",
+          "O campo de hoje favorece transicao e descoberta. O que voce julgou fixo pode ser mais maleavel do que parece. Experimente com intencao.",
+          "Hoje a estagnacao e o unico risco real. Qualquer movimento feito com consciencia — mesmo imperfeito — ja e uma resposta a energia do dia."
+        ],
+        6: [
+          "Hoje o seu campo se volta para os vinculos. Quem precisa de voce? E do que voce precisa, sem pedir diretamente? Cuidar e ser cuidado sao movimentos do mesmo amor.",
+          "Sua energia hoje e de cuidado e responsabilidade afetiva. Atenda com presenca o que esta perto. Um gesto simples de afeto no momento certo cria raizes que duram muito mais do que voce imagina.",
+          "O campo de hoje pede harmonia nos vinculos. Se existe uma tensao por resolver, este e o momento de agir com calma. O amor verdadeiro nao e ausencia de conflito — e disposicao para atravessa-lo com honestidade.",
+          "Energia de 6 pede presenca no que importa. Nao e o dia de tarefas grandes — e o dia de estar de verdade com quem voce ama.",
+          "Hoje o campo recompensa o cuidado genuino. O que voce pode oferecer — sem performar, sem esperar retorno imediato — que vai fazer alguem se sentir visto?",
+          "Sua energia pessoal hoje vibra em frequencia de lar e pertencimento. O que precisa ser restaurado, nutrido ou celebrado no espaco dos seus afetos?",
+          "O campo de hoje favorece reconciliacao e afeto. Se existe uma distancia que voce nao sabe como atravessar, este e o dia de dar um passo em direcao — nao resolver tudo, so aproximar.",
+          "Energia de 6 pede que voce tambem se cuide. O amor que voce oferece ao mundo precisa ter um ponto de abastecimento. Voce esta se nutrindo?",
+          "Hoje e dia de beleza e harmonia. O que voce pode fazer para que seu ambiente, suas relacoes e seu interior estejam um pouco mais em paz?",
+          "Sua energia hoje pede responsabilidade afetiva — nao culpa, nao sacrificio, mas presenca real com o que voce escolheu cuidar.",
+          "O campo de hoje fala de familia, no sentido mais amplo. Quem faz parte do seu circulo de amor? O que esse circulo precisa de voce hoje?",
+          "Hoje o que sustenta a vida nao e o que voce conquista — e o que voce cultiva. O cuidado com os vinculos e o investimento mais duradouro que existe."
+        ],
+        7: [
+          "Sua energia hoje pede silencio e introspeccao. Recolher-se nao e fraqueza — e inteligencia espiritual. O que precisa ser compreendido mais fundo antes de voce agir?",
+          "Hoje o campo favorece o estudo, a reflexao e a conexao com o que e maior do que a rotina. Reserve um momento de quietude — mesmo curto. O que vier nesse silencio tem peso.",
+          "Sua energia de hoje e de busca interior. Uma pergunta que voce evita responder pode estar pedindo atencao. Nao fuja dela — sente com ela. A clareza nao vem da pressa.",
+          "Energia de 7 e energia de profundidade. O que esta na superficie nao e o que importa hoje. Mergulhe um pouco mais fundo — na meditacao, na leitura, no silencio.",
+          "Hoje o campo convida ao estudo e a contemplacao. A sabedoria que voce busca ja esta disponivel — o que falta e quietude suficiente para ouvi-la.",
+          "Sua energia pessoal hoje vibra em frequencia de conexao espiritual. O que voce tem negligenciado na sua vida interior que esta pedindo atencao?",
+          "O campo de hoje nao favorece acao impulsiva — favorece compreensao. Antes de decidir, pergunte: o que mais eu preciso entender sobre essa situacao?",
+          "Energia de 7 pede fe e confianca no invisivel. Nem tudo precisa de prova ou explicacao imediata. O que voce esta sendo convidado a aceitar sem entender completamente?",
+          "Hoje e dia de isolar o ruido externo e criar espaco para o que vem de dentro. Uma hora de silencio pode valer mais do que um dia inteiro de atividade.",
+          "Sua energia hoje pede pesquisa interior — o que voce realmente acredita? O que voce realmente quer? Essas perguntas merecem mais tempo do que costumam receber.",
+          "O campo de hoje favorece a conexao com o sagrado. Qualquer pratica que te conecte ao que e maior — oracao, meditacao, natureza, estudo — e bem-vinda agora.",
+          "Hoje a intuicao e mais confiavel do que a logica. Antes de analisar, pergunte o que voce sente. A resposta que voce precisa ja esta presente — so precisa ser ouvida."
+        ],
+        8: [
+          "Hoje o seu campo esta conectado a realizacao e ao poder pessoal. O que voce quer construir? Energia sem direcao se dispersa — coloque clareza no que deseja.",
+          "Sua energia hoje e de prosperidade e determinacao. Algo que parecia distante esta mais acessivel do que voce pensa. O que falta nao e oportunidade — e decisao sobre o que voce realmente quer.",
+          "O campo de hoje favorece negociacao, resultado e reconhecimento. Posicione-se com seguranca. Voce tem mais autoridade do que demonstra — use isso com consciencia.",
+          "Energia de 8 e a energia da materializacao. O que voce tem desejado que precisa de um passo concreto hoje? Nao e dia de esperar — e dia de agir com foco.",
+          "Hoje o campo recompensa quem sabe o que quer e vai buscar. Clareza de intencao atrai o que e necessario. O que voce esta pedindo ao universo com suas acoes concretas?",
+          "Sua energia pessoal hoje vibra em frequencia de conquista. O que voce construiu merece reconhecimento. Nao minimize o que voce ja realizou — isso tambem e parte do campo.",
+          "O campo de hoje favorece ambicao com integridade. O que voce quer conquistar que seja verdadeiramente seu? Sem imitar — o que e o seu caminho de realizacao?",
+          "Energia de 8 pede que voce assuma o seu poder sem pedir desculpas. Voce tem capacidade, voce tem visao, voce tem o que e necessario. O que falta e confiar nisso.",
+          "Hoje e dia de agir com a mentalidade do realizador. Cada acao concreta e um voto de confianca no que voce esta construindo. Qual e o seu proximo voto?",
+          "Sua energia hoje convida a uma relacao saudavel com a abundancia. Nao e ganancia — e reconhecimento de que voce merece prosperar e pode sustentar esse crescimento.",
+          "O campo de hoje favorece lideranca e responsabilidade. O que voce realiza tem impacto no campo ao redor. Use o poder disponivel hoje com consciencia.",
+          "Hoje a energia disponivel e alta. Coloque-a a servico do que realmente importa para voce — nao do que parece importante para os outros. Foco e direcao sao os seus aliados."
+        ],
+        9: [
+          "Sua energia hoje pede que voce deixe ir. O que esta segurando que ja deveria ter encerrado? Fechar um ciclo com consciencia e o gesto mais corajoso que existe.",
+          "Hoje o campo pede generosidade e desapego. O que voce carrega que nao e mais seu? Soltar nao e perder — e reconhecer que alguns ciclos cumpriram o papel deles e merecem um encerramento digno.",
+          "Sua energia de hoje e de conclusao e compaixao. Algo esta chegando ao fim — e isso e bom. Permita que o ciclo se feche com gratidao. O que vem depois so encontra espaco quando o anterior e liberado com consciencia.",
+          "Energia de 9 e a energia da completude. Nao ha comeco sem fim — e voce esta no momento do fim. Honre o que foi, solte com gratidao, abra espaco para o que ainda nao chegou.",
+          "Hoje o campo favorece perdao e encerramento. Ha algo — ou alguem — que ainda esta ocupando espaco interno sem permissao? Este e o dia de liberar com consciencia.",
+          "Sua energia pessoal hoje vibra em frequencia de servico e entrega. O que voce pode oferecer que nao seja por reconhecimento, mas simplesmente porque e o que o momento pede?",
+          "O campo de hoje convida a uma revisao do que voce carrega. Nao tudo que voce comecou ainda faz sentido continuar. O que pode ser encerrado com dignidade?",
+          "Energia de 9 nao e tristeza — e sabedoria de ciclo. Tudo que termina bem deixa um legado. O que voce quer que reste do que esta sendo encerrado?",
+          "Hoje e dia de gratidao profunda. Mesmo o que doeu teve um papel. Mesmo o que saiu tinha uma funcao. A paz que voce busca esta do outro lado do perdao.",
+          "Sua energia hoje pede compaixao — com voce mesmo e com os outros. Erros foram cometidos, perdas aconteceram, mas o ciclo agora pede encerramento e nao julgamento.",
+          "O campo de hoje favorece despedidas conscientes. Nao precisa ser dramatico — pode ser simples: um reconhecimento interno de que algo passou e que voce esta pronto para o proximo passo.",
+          "Hoje o universo esta ajudando voce a fechar portas que ficaram entreabertas. Colabore com esse movimento. Soltar e um ato de forca, nao de fraqueza."
+        ]
+      };
+
+      var universal = {
+        1: [
+          "A energia do dia abre caminho para quem age. Um passo pequeno com intencao clara vale mais do que um plano perfeito que nunca sai do lugar.",
+          "Hoje o campo coletivo favorece iniciativa. Se voce tem esperado pelo momento certo, considere que esse momento e agora. Comece com o que tem.",
+          "A energia de hoje e de novos comecos. Algo que estava parado pode se mover se voce der o primeiro sinal. Nao espere permissao para abrir o seu caminho.",
+          "O campo coletivo hoje vibra em frequencia de inicio. Qualquer passo dado com intencao — mesmo pequeno — encontra menos resistencia do que encontraria em outros momentos.",
+          "Hoje o universo apoia quem age com coragem. O campo esta aberto para iniciativas, decisoes e comecos. O que voce ja sabe que precisa comecar?",
+          "A energia coletiva de hoje e pioneira. Algo novo esta sendo possivel para quem decide agir. Deixar para amanha seria desperdicar um dia favoravel.",
+          "Hoje o campo pede lideres e iniciadores. Se voce sente o impulso de comecar algo, confie nele — a energia de hoje sustenta essa coragem.",
+          "A vibracão do dia e de autonomia e forca individual. O que so voce pode fazer — que ninguem pode fazer por voce — pede movimento agora.",
+          "Hoje o que avanca e o que e iniciado. O que fica parado, fica parado. A energia esta do lado de quem age.",
+          "O campo coletivo favorece ousadia hoje. Nao e o dia de esperar a confirmacao de todos — e o dia de confiar na propria visao e dar o primeiro passo.",
+          "Hoje a energia disponivel no campo e de renovacao. Algo que parecia fechado pode se abrir se voce agir com intencao clara e coragem simples.",
+          "A energia de hoje fala em comecos. Nao precisa ser grandioso — um inicio honesto, dado agora, ja e suficiente para mover o campo."
+        ],
+        2: [
+          "O dia pede escuta. Antes de reagir, observe. O que esta chegando ate voce carrega uma mensagem que a pressa vai deixar passar.",
+          "A energia coletiva de hoje e de paciencia e cooperacao. O que parece lento esta se organizando. Confie no ritmo das coisas e observe o que esta sendo construido ao redor.",
+          "Hoje o campo pede sensibilidade. Preste atencao no que nao e dito, no gesto pequeno, na intuicao que aparece antes do pensamento. Essas sao as mensagens do dia.",
+          "O campo coletivo hoje favorece parceria e colaboracao. O que pode ser resolvido junto nao precisa ser carregado sozinho. Abra espaco para o outro.",
+          "Hoje a energia disponivel e de ponte e mediacao. Se ha um conflito ou distancia entre pessoas ou ideias, o campo favorece quem se coloca como ponto de encontro.",
+          "A energia de hoje pede que o coletivo espere antes de reagir. O que precisa ser dito esta pedindo o momento certo — nao a pressa, nao o impulso.",
+          "Hoje o campo recompensa a gentileza e a atencao ao outro. Um gesto simples de consideracao tem mais poder do que parece nessa vibracão.",
+          "A energia coletiva de hoje e suave mas consistente. O que e construido com cuidado e sem pressa hoje tem mais durabilidade do que o que e forcado.",
+          "Hoje o campo favorece a escuta ativa. Nao para responder — para compreender. Quem escuta de verdade hoje recebe mais do que imaginava.",
+          "A vibracão do dia e de cooperacao. O que pode ser dividido, compartilhado ou construido em conjunto tem mais potencia do que o que e feito em isolamento.",
+          "Hoje o campo pede paciencia com os processos. O que parece lento esta se organizando nas camadas que voce nao ve. Confie no ritmo do que esta sendo tecido.",
+          "A energia de hoje e de alianca e reciprocidade. Dar e receber sao dois lados do mesmo movimento — e o campo de hoje favorece o equilibrio entre os dois."
+        ],
+        3: [
+          "Hoje o campo favorece expressao e contato. Uma conversa honesta ou um gesto simples de presenca podem mudar o tom do dia inteiro.",
+          "A energia do dia e criativa e comunicativa. O que voce tem guardado que poderia ser compartilhado? Nao subestime o impacto de uma palavra colocada no momento certo.",
+          "Hoje o campo coletivo pede leveza e conexao. Diga o que precisa ser dito, permita-se ser visto. A expressao autentica e o melhor uso dessa energia.",
+          "O campo hoje vibra em frequencia de criatividade e alegria. O que pode ser criado, expresso ou celebrado? Essa energia nao gosta de ser contida.",
+          "Hoje a expressao coletiva esta em alta. O que o grupo, a comunidade, o circulo ao redor tem a dizer e a criar? E o momento de dar voz ao que foi guardado.",
+          "A energia de hoje favorece comunicacao direta e afetiva. Diga o que precisa ser dito com clareza e calor. Palavras verdadeiras ditas com cuidado constroem pontes.",
+          "Hoje o campo recompensa quem se expressa com autenticidade. Nao e dia de esconder — e dia de aparecer de verdade com o que voce e e com o que voce tem a dizer.",
+          "A vibracão do dia e de expansao social. Conecte-se, compartilhe, contribua com o que e seu. A energia de hoje multiplica o que e colocado em circulacao.",
+          "Hoje o campo pede presenca e leveza. Momentos de conexao genuina — uma risada, uma historia, um gesto de cuidado — sao o melhor uso dessa energia.",
+          "A energia coletiva de hoje e de inspiracao e comunicacao. Quem fala com verdade hoje planta sementes que crescem muito alem do que da para ver agora.",
+          "Hoje o que circula tem poder. Informacoes, afetos, ideias criativas — tudo o que e colocado em movimento com intencao verdadeira encontra eco no campo.",
+          "O campo de hoje convida a expressao como pratica espiritual. O que voce tem a dizer, a criar, a compartilhar que vai nutrir o campo coletivo?"
+        ],
+        4: [
+          "A energia do dia pede aterramento. Organize, finalize, cuide do que sustenta. O visivel e o concreto merecem atencao agora.",
+          "Hoje o campo coletivo favorece o trabalho firme e o detalhe cuidado. Nao e dia de grandes revelacoes — e dia de fazer bem o que precisa ser feito. Isso ja e muito.",
+          "A energia de hoje pede estrutura. O que esta solto, incompleto ou esperando organizacao? Um tempo investido no concreto hoje cria espaco para o que vem depois.",
+          "O campo hoje vibra em frequencia de construcao e solidez. O que e erguido com cuidado nesse momento tem fundacao mais firme do que o que e feito na pressa.",
+          "Hoje a energia coletiva favorece o trabalho silencioso e comprometido. A consistencia e o que separa o que dura do que passa.",
+          "A vibracão do dia e de responsabilidade e entrega. O que foi prometido pede cumprimento. O que foi iniciado pede continuidade. O campo recompensa a integridade.",
+          "Hoje o campo pede aterramento coletivo. Antes de grandes planos, cuidar do que ja existe. Antes de comecar algo novo, terminar o que ficou pela metade.",
+          "A energia de hoje favorece praticidade e disciplina. O que parece ordinario tem valor extraordinario quando e feito com atencao e intencao.",
+          "Hoje o campo recompensa quem organiza, quem estrutura, quem cuida do que sustenta. Esse trabalho silencioso e o que torna tudo o mais possivel.",
+          "A energia coletiva de hoje e de constancia. Um avanco pequeno, feito com regularidade, vale mais do que um grande salto seguido de parada.",
+          "Hoje o campo pede presenca no concreto. Cuide do corpo, do espaco, das relacoes cotidianas. O sagrado tambem mora no ordinario bem cuidado.",
+          "A vibracão do dia favorece manutencao e ajuste. O que ja esta construido precisa de cuidado. O que ja esta funcionando precisa de atencao. Nao negligencie o que sustenta."
+        ],
+        5: [
+          "O dia tem energia de mudanca. Nao e o momento de resistir ao novo — e o momento de decidir com mais leveza o que fica e o que vai.",
+          "A energia coletiva de hoje e de movimento e adaptacao. O que parecia fixo pode estar mais flexivel do que voce pensava. Experimente um caminho diferente.",
+          "Hoje o campo favorece a ousadia calculada. Uma mudanca de rota nao precisa ser dramatica para ser real. Pequenos desvios conscientes podem mudar tudo.",
+          "O campo hoje vibra em frequencia de transformacao e liberdade. O que estava preso pode se soltar. O que estava fechado pode se abrir. Mas e preciso querer.",
+          "Hoje a energia coletiva favorece adaptacao rapida. O que muda de forma inesperada hoje nao e caos — e o campo mostrando um caminho que ainda nao estava sendo visto.",
+          "A vibracão do dia e de movimento e renovacao. Estagnacao e o unico risco real — qualquer acao que mova o campo, mesmo pequena, e bem-vinda.",
+          "Hoje o campo pede flexibilidade. O que pode ser feito de forma diferente? O que pode ser tentado pela primeira vez? A energia apoia a experimentacao consciente.",
+          "A energia coletiva de hoje e inquieta por natureza. Em vez de resistir, pergunte: o que esta pedindo para mudar? A agitacao de hoje tem uma mensagem.",
+          "Hoje o campo favorece transicao com consciencia. Nao e mudanca pela mudanca — e reconhecer o que ja nao serve e ter coragem de mover em outra direcao.",
+          "A vibracão do dia e de aventura e descoberta. O que voce aprenderia se tentasse algo diferente hoje? A resposta pode surpreender.",
+          "Hoje o campo apoia quem esta disposto a se adaptar. A rigidez e o que mais perde nessa energia — a fluidez e o que mais ganha.",
+          "A energia de hoje fala de liberdade e movimento. O que voce pode libertar — uma crenca, um habito, uma relacao com o tempo — que vai abrir caminho para o que vem?"
+        ],
+        6: [
+          "A energia de hoje se volta para os vinculos e o cuidado. O que voce entrega ao mundo hoje volta transformado. Aja com afeto e clareza.",
+          "Hoje o campo coletivo pede harmonia e responsabilidade afetiva. Presenca real vale mais do que presenca perfeita. O que voce pode oferecer de genuino ao seu circulo?",
+          "A energia do dia favorece o amor como pratica, nao como sentimento abstrato. Um gesto concreto de cuidado — oferecido ou recebido — pode restaurar o que estava desequilibrado.",
+          "O campo hoje vibra em frequencia de cuidado e beleza. O que pode ser nutrido, embelezado ou restaurado nos ambientes e relacoes ao redor?",
+          "Hoje a energia coletiva favorece o amor em suas formas mais simples e concretas. Uma ligacao, uma refeicao compartilhada, uma palavra de atencao genuina.",
+          "A vibracão do dia e de responsabilidade com o que foi escolhido amar. Cuidar com presenca e o maior ato de amor que existe.",
+          "Hoje o campo pede harmonia — nos ambientes, nas relacoes, no interior. O que pode ser colocado em paz sem que ninguem precise perder?",
+          "A energia coletiva de hoje e de familia e pertencimento. O que fortalece os lacos e o que os desgasta? E dia de investir no que fortalece.",
+          "Hoje o campo favorece reconciliacao e afeto. Nao precisa ser uma conversa grande — as vezes um gesto simples e suficiente para restaurar o que estava desgastado.",
+          "A vibracão do dia e de servico com amor. O que voce pode fazer pelo circulo ao redor que nao seja por obrigacao, mas por escolha genuina?",
+          "Hoje o campo recompensa o cuidado com o espaco que habitamos — fisico, emocional, relacional. O que precisa de mais atencao no ambiente que voce criou?",
+          "A energia de hoje fala de amor como construcao diaria. Nao o sentimento — o ato. O que voce escolhe fazer, hoje, que demonstra o amor que voce sente?"
+        ],
+        7: [
+          "O dia convida ao recolhimento e a escuta interior. Nao force conclusoes agora. Deixe que o silencio revele o que a agitacao esconde.",
+          "A energia coletiva de hoje e de profundidade. O que merece mais reflexao antes de virar decisao? Reserve um momento para pensar sem pressa.",
+          "Hoje o campo favorece contemplacao e conexao espiritual. Algo que voce ainda nao entendeu completamente pode se revelar se voce parar de procurar e comecar a escutar.",
+          "O campo hoje vibra em frequencia de sabedoria e introspeccao. O que e superficial nao tem tanta potencia quanto o que vem do nucleo. Va ao fundo.",
+          "Hoje a energia coletiva pede pausas e reflexao. O mundo externo pode esperar — o que esta sendo processado internamente precisa de espaco.",
+          "A vibracão do dia e de busca espiritual e contemplacao. O que o campo invisivel esta tentando comunicar? As respostas nao estao todas la fora.",
+          "Hoje o campo favorece a investigacao profunda. Antes de agir, entender. Antes de decidir, sentir. A qualidade da pergunta determina a qualidade da resposta.",
+          "A energia coletiva de hoje e de fe e confianca no processo. Nem tudo que nao e visto deixa de existir. O invisivel tambem e real — e esta trabalhando a seu favor.",
+          "Hoje o campo pede silencio coletivo. Em meio a muito barulho, quem encontra um ponto de quietude interna tem acesso a informacoes que os outros nao percebem.",
+          "A vibracão do dia favorece estudo, meditacao e conexao com o sagrado. O conhecimento que transforma nao vem apenas de livros — vem da experiencia interior profunda.",
+          "Hoje o campo favorece quem esta disposto a entrar em contato com o proprio interior sem pressa de sair. O que voce encontra quando para de se distrair?",
+          "A energia de hoje fala de profundidade e misterio. Nao tudo precisa ser explicado imediatamente. Deixar a pergunta existir por mais tempo as vezes revela respostas muito mais ricas."
+        ],
+        8: [
+          "Hoje o campo esta carregado de potencial de realizacao. Coloque intencao no que quer construir — a energia esta disponivel para quem age com foco.",
+          "A energia do dia e de forca, resultado e reconhecimento. Nao diminua o que voce e capaz de entregar. Posicione-se com clareza e deixe o trabalho falar.",
+          "Hoje o campo coletivo favorece ambicao com consciencia. O que voce quer conquistar? Energia de realizacao sem direcao se perde — defina, aja, colha.",
+          "O campo hoje vibra em frequencia de poder e materializacao. O que foi planejado com cuidado pode dar um salto real hoje se for colocado em movimento.",
+          "Hoje a energia coletiva favorece resultado e impacto. Quem age com foco e clareza encontra menos resistencia do que o habitual. Use esse campo a seu favor.",
+          "A vibracão do dia e de prosperidade e forca. O que pode ser conquistado hoje com determinacao e integridade? A energia apoia quem sabe o que quer.",
+          "Hoje o campo pede posicionamento. Nao e dia de se esconder — e dia de mostrar o que voce e capaz, de negociar com firmeza, de colher o que foi construido.",
+          "A energia coletiva de hoje e de abundancia e realizacao. O que parecia fora de alcance pode estar mais perto do que parece se voce agir com confianca.",
+          "Hoje o campo favorece decisoes que tem impacto real. Quem hesita perde o momento — quem age com clareza encontra o campo colaborando.",
+          "A vibracão do dia e de conquista e reconhecimento. O que foi feito merece ser visto. O que foi construido merece ser colhido. Permita-se receber.",
+          "Hoje o campo recompensa quem trabalha com visao e execucao. Ter o objetivo claro e fundamental — a energia de hoje nao sustenta o vago.",
+          "A energia de hoje fala de poder responsavel. O que voce pode realizar que vai beneficiar nao so voce, mas o campo ao redor? Essa e a pergunta que alinha a energia de 8."
+        ],
+        9: [
+          "A energia do dia pede fechamento e desapego. Algo pendente pede encerramento. Deixar ir com consciencia e abrir espaco para o que vem.",
+          "Hoje o campo coletivo e de conclusao e compaixao. O que foi vivido merece gratidao, mesmo o que doeu. Encerrar um ciclo com honestidade e o inicio do proximo.",
+          "A energia de hoje pede que voce solte o que nao cabe mais. Nao e perda — e limpeza. O que vai embora com consciencia abre caminho para algo que ainda nao chegou.",
+          "O campo hoje vibra em frequencia de completude e liberacao. O que foi iniciado ha muito tempo e que ainda carrega um peso pode ser encerrado com dignidade agora.",
+          "Hoje a energia coletiva favorece o perdao e a dissolucao de padroes antigos. Nao ha necessidade de carregar para sempre o que ja cumpriu sua funcao.",
+          "A vibracão do dia e de ciclo que se fecha. Gratidao pelo que passou, abertura para o que vem — esse e o movimento que o campo de hoje apoia.",
+          "Hoje o campo pede generosidade e entrega. Compartilhar o que voce sabe, o que voce tem, o que voce e — sem apego ao retorno — e o melhor uso dessa energia.",
+          "A energia coletiva de hoje e de transcendencia e servico. O que pode ser dado, curado ou liberado que vai beneficiar o campo maior?",
+          "Hoje o campo favorece encerramento de vinculos energeticos que ja nao servem. Nao com raiva — com clareza e gratidao pelo que foi.",
+          "A vibracão do dia e de profunda compaixao — com voce mesmo e com todos que fizeram parte do ciclo que esta sendo encerrado. Todos fazem o que podem com o que tem.",
+          "Hoje o campo recompensa quem tem coragem de concluir. Fechar algo com consciencia e um ato de cuidado com o proximo ciclo que esta prestes a comecar.",
+          "A energia de hoje fala de legado e encerramento. O que voce quer que reste do que esta terminando? Essa consciencia e o que transforma um fim em semente."
+        ]
+      };
+
+      // ── streak ────────────────────────────────────────────
+      function updateStreak() {
+        var today = todayStr();
+        var last = lsGet('arsLastVisit');
+        var streak = parseInt(lsGet('arsVisitStreak') || '0', 10);
+        if (last === today) {
+          // already counted today
+        } else if (last === yesterdayStr()) {
+          streak = streak + 1;
+          lsSet('arsVisitStreak', streak);
+          lsSet('arsLastVisit', today);
+        } else {
+          streak = 1;
+          lsSet('arsVisitStreak', streak);
+          lsSet('arsLastVisit', today);
+        }
+        return streak;
+      }
+
+      // ── milestone ─────────────────────────────────────────
+      function checkMilestone(streak) {
+        if (streak !== 5) return;
+        var celebrated = [];
+        try { celebrated = JSON.parse(lsGet('arsCelebratedMilestones') || '[]'); } catch(e) {}
+        if (celebrated.indexOf(5) !== -1) return;
+        celebrated.push(5);
+        lsSet('arsCelebratedMilestones', JSON.stringify(celebrated));
+        showMilestone(5);
+      }
+
+      function showMilestone(days) {
+        var dialog = document.getElementById('milestoneDialog');
+        var titleEl = document.getElementById('milestoneTitle');
+        var waLink = document.getElementById('milestoneWhatsApp');
+        if (!dialog) return;
+        if (titleEl) titleEl.textContent = days + ' dias seguidos de presenca';
+        if (waLink) {
+          var txt = 'Ola! Completei ' + days + ' dias seguidos no ARS AKASHA e gostaria de receber minha tiragem gratuita no app de Oraculos.';
+          waLink.href = 'https://wa.me/' + (whatsappConfig && whatsappConfig.number ? whatsappConfig.number : '5544997038883') + '?text=' + encodeURIComponent(txt);
+        }
+        dialog.showModal();
+      }
+
+      var closeBtn = document.getElementById('milestoneClose');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+          document.getElementById('milestoneDialog').close();
+        });
+      }
+
+      // ── energy card ───────────────────────────────────────
+      function renderEnergyCard() {
+        var textEl = document.getElementById('dailyEnergyText');
+        var streakEl = document.getElementById('dailyEnergyStreak');
+        var countEl = document.getElementById('streakCount');
+        var labelEl = document.getElementById('streakLabel');
+        if (!textEl) return;
+
+        var today = todayStr();
+        var cachedDate = lsGet('arsEnergyDate');
+        var cachedMsg = lsGet('arsEnergyMsg');
+        var msg;
+
+        if (cachedDate === today && cachedMsg) {
+          msg = cachedMsg;
+        } else {
+          var birthDate = lsGet('arsBirthDate');
+          var num, variants;
+          if (birthDate) {
+            var parts = birthDate.split('/');
+            var now = new Date();
+            var rawSum = parseInt(parts[0], 10) + parseInt(parts[1], 10) +
+                         now.getDate() + (now.getMonth() + 1) + now.getFullYear();
+            num = reduce(rawSum);
+            variants = personal[num];
+          } else {
+            var now2 = new Date();
+            var rawSum2 = now2.getDate() + (now2.getMonth() + 1) + now2.getFullYear();
+            num = reduce(rawSum2);
+            variants = universal[num];
+          }
+          msg = pickVariant('arsEnergySeen_' + (birthDate ? 'p' : 'u') + num, variants);
+          lsSet('arsEnergyDate', today);
+          lsSet('arsEnergyMsg', msg);
+        }
+
+        textEl.textContent = msg || '';
+
+        var streak = updateStreak();
+        if (streakEl && streak >= 1) {
+          streakEl.hidden = false;
+          if (countEl) countEl.textContent = streak;
+          if (labelEl) labelEl.textContent = streak === 1 ? 'dia seguido' : 'dias seguidos';
+        }
+
+        checkMilestone(streak);
+      }
+
+      renderEnergyCard();
+
+      // salva data de nascimento quando leitura e gerada
+      var intakeForm = document.getElementById('intakeForm');
+      if (intakeForm) {
+        intakeForm.addEventListener('submit', function () {
+          var bd = document.getElementById('birthDate');
+          if (bd && bd.value) {
+            lsSet('arsBirthDate', bd.value);
+            lsSet('arsEnergyDate', '');
+          }
+        });
+      }
+
+      // ── tab switching ─────────────────────────────────────
+      var tabs = document.querySelectorAll('.page-tab');
+      var panels = document.querySelectorAll('.tab-panel');
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (t) { t.classList.remove('active'); });
+          panels.forEach(function (p) { p.hidden = true; });
+          tab.classList.add('active');
+          document.getElementById('tab-' + tab.dataset.tab).hidden = false;
+        });
+      });
+
+      // ── plan grids ────────────────────────────────────────
+      function buildWhatsAppUrl(plan, type) {
+        var label = type === 'ebook' ? 'e-book' : 'estudo';
+        var msg = 'Ola! Tenho interesse no ' + label + ': ' + plan.name + ' (' + plan.price + ').';
+        return 'https://wa.me/' + whatsappConfig.number + '?text=' + encodeURIComponent(msg);
+      }
+
+      var estudosGrid = document.getElementById('estudosGrid');
+      if (estudosGrid) {
+        estudosGrid.innerHTML = plans.filter(function (p) { return !isEbookPlan(p); }).map(function (p) {
+          return '<div class="plan-card">' +
+            '<span class="plan-badge">' + p.badge + '</span>' +
+            '<h3>' + p.name + '</h3>' +
+            '<div class="plan-price">' + p.price + '</div>' +
+            '<p>' + p.summary + '</p>' +
+            '<ul>' + p.features.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' +
+            '<a class="primary-button link-button" href="' + buildWhatsAppUrl(p, 'estudo') + '" target="_blank" rel="noreferrer">Quero este estudo</a>' +
+            '</div>';
+        }).join('');
+      }
+
+      var ebooksGrid = document.getElementById('ebooksGrid');
+      if (ebooksGrid) {
+        ebooksGrid.innerHTML = plans.filter(function (p) { return isEbookPlan(p); }).map(function (p) {
+          return '<div class="ebook-card">' +
+            '<span class="plan-badge">' + p.badge + '</span>' +
+            '<strong>' + p.name + '</strong>' +
+            '<div class="plan-price">' + p.price + '</div>' +
+            '<p>' + p.summary + '</p>' +
+            '<ul class="ebook-features">' + p.features.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' +
+            '<a class="primary-button link-button" href="' + buildWhatsAppUrl(p, 'ebook') + '" target="_blank" rel="noreferrer">Quero este e-book</a>' +
+            '</div>';
+        }).join('');
+      }
+
+    })();
+    </script>
   </body>
 </html>
