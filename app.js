@@ -344,6 +344,21 @@ const plans = [
     ],
   },
   {
+    id: "ebook-exu-pinga-fogo",
+    name: "Exu Pinga Fogo — Guardiao do Cruzeiro e da Calunga Pequena",
+    price: "R$ 69,90",
+    badge: "E-book",
+    summary: "Conhecimento de casa: a hierarquia, o Brasao de Obaluae, os fundamentos rituais e o ponto exclusivo do Chefe da Quimbanda do Centro Umbandista Caboclo Aymore.",
+    features: [
+      "Produto digital em e-book (PDF)",
+      "16 paginas, 10 capitulos completos",
+      "A estrutura dos Sete Chefes de Legiao e o Brasao recebido de Obaluae",
+      "Fundamentos rituais: elementos, oferendas, dia e hora de trabalho",
+      "Ponto cantado exclusivo, recebido por Mago HNS RE",
+      "Conteudo raro, nao disponivel em nenhuma outra fonte",
+    ],
+  },
+  {
     id: "ebook-os-6-caminhos-de-ori",
     name: "Os 6 Caminhos de Ori",
     price: "R$ 27,90",
