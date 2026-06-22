@@ -277,6 +277,13 @@
             <p class="topbar-subtitle">Conteudo em PDF, entregue pelo WhatsApp apos confirmacao do pagamento via Pix. Nao sao personalizados — sao estudos completos prontos para voce aplicar.</p>
           </section>
           <div class="ebooks-grid" id="ebooksGrid"></div>
+
+          <section class="ebooks-intro ebooks-gratuitos-intro" aria-label="E-books gratuitos">
+            <p class="eyebrow">Biblioteca Viva</p>
+            <h2>E-books gratuitos</h2>
+            <p class="topbar-subtitle">Conhecimento aberto. Leia no celular ou baixe o PDF — sem custo, sem cadastro.</p>
+          </section>
+          <div class="ebooks-grid" id="ebooksGratuitosGrid"></div>
         </div><!-- /tab-ebooks -->
       </main>
     </div>
@@ -789,6 +796,23 @@
             '<p>' + p.summary + '</p>' +
             '<ul class="ebook-features">' + p.features.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' +
             '<a class="primary-button link-button" href="' + buildWhatsAppUrl(p, 'ebook') + '" target="_blank" rel="noreferrer">Quero este e-book</a>' +
+            '</div>';
+        }).join('');
+      }
+
+      var ebooksGratuitosGrid = document.getElementById('ebooksGratuitosGrid');
+      if (ebooksGratuitosGrid) {
+        ebooksGratuitosGrid.innerHTML = ebooksGratuitos.map(function (e) {
+          var pdfUrl = 'ebooks-gratuitos/' + e.id + '.pdf';
+          return '<div class="ebook-card ebook-card-gratuito">' +
+            '<span class="plan-badge badge-gratuito">Gratuito</span>' +
+            '<strong>' + e.name + '</strong>' +
+            '<span class="ebook-tema">' + e.badge + '</span>' +
+            '<p>' + e.summary + '</p>' +
+            '<div class="ebook-gratuito-btns">' +
+            '<a class="primary-button link-button" href="' + pdfUrl + '" target="_blank" rel="noreferrer">Ler agora</a>' +
+            '<a class="secondary-button link-button" href="' + pdfUrl + '" download rel="noreferrer">Baixar PDF</a>' +
+            '</div>' +
             '</div>';
         }).join('');
       }

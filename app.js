@@ -390,6 +390,27 @@ const plans = [
   },
 ];
 
+const ebooksGratuitos = [
+  { id: "o-que-esta-por-vir", name: "O Que Esta Por Vir", badge: "Profecia", summary: "Uma leitura sobre os ciclos que se aproximam, o que o tempo traz e como se preparar espiritualmente." },
+  { id: "duas-almas-um-caminho", name: "Duas Almas Um Caminho", badge: "Amor", summary: "Sobre encontros de alma, vinculos karmicos e o que une duas pessoas alem do acaso." },
+  { id: "os-pontos-invisiveis", name: "Os Pontos Invisiveis do Seu Destino", badge: "Destino", summary: "Os nos ocultos da jornada — o que molda sua vida antes mesmo de voce perceber." },
+  { id: "a-energia-que-ninguem-te-apresentou", name: "A Energia Que Ninguem Te Apresentou", badge: "Energia", summary: "Forca espiritual que esta presente em voce e que poucos conseguem nomear ou reconhecer." },
+  { id: "magia-planetaria", name: "Magia Planetaria", badge: "Magia", summary: "Os sete planetas, seus regentes, suas horas e como trabalhar com essas forca no cotidiano." },
+  { id: "os-16-odus", name: "Os 16 Odus Principais", badge: "Odus", summary: "Os 16 Odus-raiz de Ifa: essencia, luz, sombra e o que cada um revela sobre a jornada da alma." },
+  { id: "orixas", name: "Orixas", badge: "Orixas", summary: "Quem sao os Orixas, seus dominios, suas qualidades e como se manifestam na vida de cada pessoa." },
+  { id: "guias-de-luz", name: "Guias de Luz", badge: "Guias", summary: "Caboclos, pretos-velhos, marinheiros e outros guias: hierarquia, missao e como se comunicar com eles." },
+  { id: "exu-e-pombo-gira", name: "Exu e Pomba-Gira", badge: "Esquerda", summary: "A forca da encruzilhada: quem sao Exu e Pomba-Gira, seus reinos e sua funcao espiritual." },
+  { id: "kiumbas-eguns-obsessores", name: "Kiumbas, Eguns e Obsessores", badge: "Protecao", summary: "O que sao, como agem e como se proteger de influencias espirituais negativas." },
+  { id: "os-7-reinos-de-exu", name: "Os 7 Reinos de Exu", badge: "Reinos", summary: "A estrutura dos sete reinos de Exu, seus chefes de legiao e a hierarquia da esquerda." },
+  { id: "roda-de-samsara", name: "Roda de Samsara", badge: "Karmico", summary: "O ciclo que se repete: como o karma funciona, o que nos prende e o que nos liberta." },
+  { id: "anjos-e-daemons", name: "Anjos e Daemons", badge: "Anjos", summary: "A hierarquia angelical e os daemons: forca de luz e sombra que influenciam a jornada da alma." },
+  { id: "estrelas-fixas", name: "Estrelas Fixas", badge: "Estrelas", summary: "As grandes estrelas do ceu e seu impacto na vida espiritual, nos dons e nos desafios da alma." },
+  { id: "os-7-espiritos-olimpicos", name: "Os 7 Espiritos Olimpicos", badge: "Olimpicos", summary: "Aratron, Bethor, Phaleg, Och, Hagith, Ophiel e Phul: os sete regentes planetarios da magia hermetica." },
+  { id: "vidas-passadas", name: "Vidas Passadas", badge: "Akashico", summary: "Memorias da alma, padroes repetidos e talentos antigos que ainda influenciam sua vida atual." },
+  { id: "mediunidade", name: "Mediunidade", badge: "Mediunidade", summary: "O que e mediunidade, como se manifesta e como desenvolver seus dons com equilibrio e protecao." },
+  { id: "exu-orixa", name: "Exu Orixa", badge: "Exu", summary: "Exu como Orixa: sua origem yoruba, sua diferenca dos Exus de Umbanda e seu papel cosmico." },
+];
+
 const whatsappConfig = {
   label: "Loja Umuarama Sede",
   number: "5544997038883",
