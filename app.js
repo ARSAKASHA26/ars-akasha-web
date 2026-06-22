@@ -359,6 +359,21 @@ const plans = [
     ],
   },
   {
+    id: "ebook-sete-chefes-exu",
+    name: "Os Sete Chefes Cabeca de Exu e os Sete Reinos de Exu",
+    price: "R$ 69,90",
+    badge: "E-book",
+    summary: "Doutrina da esquerda: hierarquia, reinos, fundamentos rituais e os Sete Chefes de Legiao de Exu segundo o ensinamento do Centro Umbandista Caboclo Aymore.",
+    features: [
+      "Produto digital em e-book (PDF)",
+      "Os Sete Chefes Cabeca de Exu e seus dominios",
+      "Os Sete Reinos de Exu — estrutura e hierarquia",
+      "Fundamentos rituais da esquerda",
+      "Ensinamento do Mago HNS RE — Centro Umbandista Caboclo Aymore",
+      "Conteudo raro, doutrina viva da casa",
+    ],
+  },
+  {
     id: "ebook-os-6-caminhos-de-ori",
     name: "Os 6 Caminhos de Ori",
     price: "R$ 27,90",
