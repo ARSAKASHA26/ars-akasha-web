@@ -321,7 +321,6 @@ const plans = [
     summary: "16 pontos matematicos do seu mapa revelam por que o dinheiro trava, o amor nao sustenta, o corpo falha e a vida resiste. Cada chave mostra o que bloqueia e o que libera — em duas camadas: esta vida e a memoria da alma.",
     features: [
       "16 Partes Arabicas calculadas",
-      "Mapa natal + mapa da alma",
       "Dinheiro, amor e saude",
       "Casamento e vinculos",
       "Heranca e ancestrais",
