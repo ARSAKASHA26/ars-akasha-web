@@ -149,8 +149,8 @@ const plans = [
     ],
   },
   {
-    id: "dossie-roda-de-samsara",
-    name: "Dossie da Roda de Samsara",
+    id: "a-sua-roda-de-samsara",
+    name: "A sua Roda de Samsara",
     price: "R$ 69,90",
     badge: "Karmico",
     summary: "Um estudo mais completo sobre o ciclo que se repete, o desejo da alma, o medo oculto, o ganho inconsciente e a virtude de libertacao.",
@@ -311,6 +311,21 @@ const plans = [
       "Aprendizados karmicos",
       "Amor, prosperidade e protecao",
       "Missao da alma",
+    ],
+  },
+  {
+    id: "16-chaves-do-destino",
+    name: "Por Que a Vida Trava — As 16 Chaves do Destino",
+    price: "R$ 198,90",
+    badge: "Destino",
+    summary: "16 pontos matematicos do seu mapa revelam por que o dinheiro trava, o amor nao sustenta, o corpo falha e a vida resiste. Cada chave mostra o que bloqueia e o que libera — em duas camadas: esta vida e a memoria da alma.",
+    features: [
+      "16 Partes Arabicas calculadas",
+      "Mapa natal + mapa da alma",
+      "Dinheiro, amor e saude",
+      "Casamento e vinculos",
+      "Heranca e ancestrais",
+      "O que trava e o que libera",
     ],
   },
   {
