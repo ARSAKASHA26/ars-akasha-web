@@ -271,7 +271,7 @@ const plans = [
   {
     id: "seis-odus-que-regem-sua-vida",
     name: "Os 6 Odus que Regem sua Vida",
-    price: "R$ 279,90",
+    price: "R$ 330,90",
     badge: "Odus",
     summary: "Revela os 6 Odus que influenciam sua existencia, seus aprendizados, desafios, potenciais e caminhos espirituais.",
     features: [
@@ -356,6 +356,22 @@ const plans = [
       "Rituais energeticos",
       "Jornada de 21 dias",
     ],
+  },
+  {
+    id: "seu-exu-e-sua-pomba-gira",
+    name: "Seu Exu e Sua Pomba Gira",
+    price: "R$ 6,90",
+    badge: "Esquerda",
+    summary: "Descubra qual Exu e qual Pomba Gira ressoam com sua jornada a partir da posicao de Mercurio e Lilith no seu mapa natal. Um estudo simbolico e ressonante sobre as forcas da esquerda.",
+    features: [
+      "Calculo por Swiss Ephemeris",
+      "Seu Exu — via posicao de Mercurio",
+      "Sua Pomba Gira — via posicao de Lilith",
+      "36 Exus e 36 Pomba Giras mapeados",
+      "Resultado imediato no app",
+      "R$ 6,90 por entidade",
+    ],
+    link: "exu-pomba-gira.html",
   },
   {
     id: "ebook-exu-pinga-fogo",
