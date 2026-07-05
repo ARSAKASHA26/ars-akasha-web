@@ -1,39 +1,30 @@
-# ARS AKASHA Web
+# Ars Akasha Web
 
-Primeira versao navegavel do app ARS AKASHA.
+Aplicacao inicial em Next.js para o dominio `arsakasha.com`, preparada para deploy na Vercel, checkout com Stripe e futura area do cliente com Supabase.
 
-## Como abrir
+## Rodar localmente
 
-Abra `index.html` no navegador:
-
-```text
-C:\Users\magoh\OneDrive\Documentos\MAPA NATAL\ars-akasha-web\index.html
+```bash
+npm install
+npm run dev
 ```
 
-## O que ja existe
+Crie um arquivo `.env.local` a partir de `.env.example` antes de testar checkout ou Supabase.
 
-- Formulario comercial para nome, WhatsApp obrigatorio, e-mail, data, hora e cidade de nascimento.
-- Consentimento obrigatorio para receber mensagens, ofertas e novidades pelo WhatsApp e e-mail.
-- Geracao de leitura gratuita com signo solar, elemento, modalidade, caminho de vida, numero do nome, energia do dia, numero de sorte, Odu Ori, Sagrado Anjo Guardiao e salmo angelico.
-- Captura local de leads com `localStorage`.
-- Secao de planos comerciais com simulacao de pedido.
-- Compra inicial por WhatsApp com mensagem pronta.
-- Navegacao por modulos do acervo.
-- Busca por titulo, caminho, tags e correspondencias.
-- Painel de detalhe para cada registro.
-- Filtros rapidos.
-- Alternancia de tema claro/escuro.
-- Notas locais salvas no navegador com `localStorage`.
+## Rotas
 
-## Proximos passos naturais
+- `/` pagina inicial
+- `/leitura-gratuita` leitura gratuita
+- `/estudos-personalizados` oferta de estudos personalizados
+- `/checkout` inicio do pagamento
+- `/obrigado` retorno apos pagamento
+- `/api/checkout` cria uma Stripe Checkout Session
+- `/api/stripe/webhook` ponto inicial para eventos Stripe
 
-- Indexar automaticamente os arquivos `.md` reais de `ARS AKASHA`.
-- Exibir selos dos 72 daemons a partir da pasta de imagens.
-- Criar cadastro de consulente.
-- Refinar o Odu Ori com fuso historico real da cidade quando houver integracao geografica completa.
-- Conectar calculadora de mapa natal completa com ascendente, Lua, casas e planetas.
-- Expandir a base de cidades do ascendente e depois trocar pelo motor astrologico completo.
-- Ler trechos interpretativos das fichas angelicas diretamente do banco interno.
-- Conectar pagamento real.
-- Enviar relatorio por e-mail.
-- Criar fichas completas para entidades, odus, chakras e fontes.
+## Proximos passos para producao
+
+1. Criar o repositorio no GitHub e conectar na Vercel.
+2. Apontar `arsakasha.com` para a Vercel pelo painel da Namecheap.
+3. Criar produtos e precos no Stripe e preencher `STRIPE_PRICE_ESTUDO_PERSONALIZADO`.
+4. Configurar `NEXT_PUBLIC_SITE_URL=https://arsakasha.com` na Vercel.
+5. Criar o projeto Supabase quando a area do cliente e biblioteca forem implementadas.
