@@ -10,8 +10,8 @@ const pillars = [
     body: "Dossies e leituras sob medida com base em nascimento, ciclos, arquetipos, caminhos espirituais e perguntas do cliente."
   },
   {
-    title: "Biblioteca do cliente",
-    body: "Estrutura preparada para uma futura area privada com login, historico de estudos e materiais digitais via Supabase."
+    title: "Biblioteca da Alma",
+    body: "Um espaco em construcao para guardar seus estudos, caminhos e registros importantes em uma jornada continua."
   }
 ];
 
@@ -21,11 +21,11 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-inner">
           <span className="eyebrow">arsakasha.com</span>
-          <h1>Ars Akasha</h1>
+          <h1>Biblioteca da Alma</h1>
           <p>
-            Uma aplicacao para leituras espirituais, estudos personalizados e
-            uma futura biblioteca do cliente, pronta para crescer com GitHub,
-            Vercel, Stripe e Supabase.
+            Estudos hermeticos para revelar o que sua alma trouxe, vive e veio
+            aprender. Um convite ao autoconhecimento, ao proposito e a evolucao
+            espiritual.
           </p>
           <div className="actions">
             <Link className="button primary" href="/leitura-gratuita">
@@ -51,12 +51,12 @@ export default function HomePage() {
 
       <section className="section alt">
         <div className="container text-block">
-          <span className="eyebrow">estrutura inicial</span>
-          <h2>Do primeiro contato ao pagamento, com espaco para evoluir.</h2>
+          <span className="eyebrow">jornada ars akasha</span>
+          <h2>Uma leitura que acolhe sua historia antes de orientar seus proximos passos.</h2>
           <p>
-            Esta base separa as jornadas principais do site, deixa o checkout
-            preparado para Stripe e inclui os clientes Supabase para ativar
-            autenticacao, banco de dados e biblioteca quando chegar a hora.
+            A Ars Akasha une simbolos, perguntas profundas e caminhos
+            espirituais para transformar dados essenciais em clareza, direcao e
+            uma entrega feita com cuidado.
           </p>
         </div>
       </section>

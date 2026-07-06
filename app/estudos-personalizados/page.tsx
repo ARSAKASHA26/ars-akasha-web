@@ -3,8 +3,8 @@ import Link from "next/link";
 const items = [
   "Dados de nascimento estruturados para calculo do mapa e dos ciclos.",
   "Pergunta principal do cliente guardada junto ao pedido.",
-  "Pagamento pelo Stripe sem cadastrar produto manualmente no painel.",
-  "Base pronta para salvar no Supabase e liberar a biblioteca do cliente."
+  "Pagamento seguro apos o preenchimento do pedido.",
+  "Entrega preparada para acompanhar sua jornada dentro da Ars Akasha."
 ];
 
 export default function EstudosPersonalizadosPage() {
@@ -18,8 +18,8 @@ export default function EstudosPersonalizadosPage() {
               <h1>Estudos personalizados</h1>
               <p>
                 Um pedido completo para reunir nascimento, contato e pergunta
-                espiritual antes do pagamento. O Stripe cuida da cobranca; o
-                site guarda a estrutura que depois sera enviada ao Supabase.
+                espiritual antes do pagamento. Assim o estudo nasce com
+                contexto, cuidado e direcao desde o primeiro contato.
               </p>
               <div className="actions">
                 <a className="button primary" href="#pedido">
@@ -34,8 +34,8 @@ export default function EstudosPersonalizadosPage() {
               <span>Fluxo Ars Akasha</span>
               <ol>
                 <li>Cliente informa nascimento e pergunta.</li>
-                <li>Site envia ao Stripe para pagamento.</li>
-                <li>Dados ficam prontos para Supabase.</li>
+                <li>O pedido segue para pagamento seguro.</li>
+                <li>As informacoes orientam a preparacao do estudo.</li>
                 <li>O dossie nasce a partir dos calculos e da IA.</li>
               </ol>
             </aside>
@@ -77,8 +77,8 @@ export default function EstudosPersonalizadosPage() {
                 </label>
                 <label className="field">
                   <span>Foco do estudo</span>
-                  <select name="study_focus" defaultValue="Mapa espiritual completo">
-                    <option>Mapa espiritual completo</option>
+                  <select name="study_focus" defaultValue="Biblioteca da Alma">
+                    <option>Biblioteca da Alma</option>
                     <option>Relacionamentos e ciclos afetivos</option>
                     <option>Vocacao, trabalho e prosperidade</option>
                     <option>Protecao espiritual e caminhos abertos</option>
@@ -149,9 +149,9 @@ export default function EstudosPersonalizadosPage() {
             <span className="eyebrow">como sera usado</span>
             <h2>Do formulario ao dossie</h2>
             <p>
-              Estes campos substituem o cadastro limitado dos e-commerces. A
-              data, a hora e a cidade de nascimento ficam ligadas ao pedido
-              para alimentar os calculos do mapa, a organizacao do dossie e a
+              Estes campos substituem formularios genericos e frios. A data, a
+              hora e a cidade de nascimento ficam ligadas ao pedido para
+              alimentar os calculos simbolicos, a organizacao do dossie e a
               escrita final.
             </p>
             <ul className="feature-list compact">

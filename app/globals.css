@@ -1,14 +1,15 @@
 :root {
-  --bg: #f7f4ee;
-  --ink: #221f1a;
-  --muted: #6e665d;
-  --line: #ddd3c6;
-  --panel: #fffaf1;
-  --accent: #8e3b2f;
-  --accent-strong: #62241d;
-  --gold: #c99a43;
-  --green: #3f6f5b;
-  --night: #202738;
+  --bg: #15120f;
+  --ink: #f4eadb;
+  --muted: #bba994;
+  --line: #45392d;
+  --panel: rgba(33, 28, 23, 0.9);
+  --panel-strong: #2b251f;
+  --accent: #d8a84a;
+  --accent-strong: #f1c769;
+  --gold: #d8a84a;
+  --green: #6fb08d;
+  --night: #15120f;
 }
 
 * {
@@ -21,7 +22,11 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(12, 10, 8, 0.82), rgba(12, 10, 8, 0.64)),
+    url("/assets/akasha-cosmic-tools-bg.jpg") center / cover fixed no-repeat,
+    var(--bg);
   color: var(--ink);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -42,13 +47,116 @@ textarea {
 
 .site-shell {
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+}
+
+.site-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  align-content: start;
+  gap: 22px;
+  border-right: 1px solid var(--line);
+  padding: 24px 18px;
+  background: rgba(20, 16, 13, 0.84);
+  backdrop-filter: blur(18px);
+}
+
+.content-shell {
+  min-width: 0;
   display: flex;
   flex-direction: column;
 }
 
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-brand img {
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(216, 168, 74, 0.72);
+  border-radius: 999px;
+  object-fit: cover;
+  background: #0f0d0a;
+  box-shadow: 0 0 0 3px rgba(216, 168, 74, 0.12);
+}
+
+.sidebar-brand span {
+  display: grid;
+  gap: 2px;
+}
+
+.sidebar-brand small {
+  color: var(--muted);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+}
+
+.sidebar-public {
+  display: grid;
+  gap: 14px;
+  border: 1px solid rgba(216, 168, 74, 0.32);
+  border-radius: 8px;
+  background: rgba(216, 168, 74, 0.07);
+  padding: 16px;
+}
+
+.sidebar-public h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.42rem;
+  line-height: 1.08;
+}
+
+.sidebar-public p:not(.eyebrow),
+.sidebar-highlight span,
+.sidebar-store span {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.sidebar-highlight {
+  border-left: 2px solid var(--gold);
+  background: rgba(0, 0, 0, 0.16);
+  padding: 10px 12px;
+}
+
+.sidebar-highlight strong,
+.sidebar-highlight span {
+  display: block;
+}
+
+.sidebar-highlight strong,
+.sidebar-store strong {
+  color: var(--gold);
+}
+
+.sidebar-store {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.sidebar-store img {
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(216, 168, 74, 0.55);
+  border-radius: 999px;
+  object-fit: cover;
+}
+
 .site-header {
   border-bottom: 1px solid var(--line);
-  background: rgba(247, 244, 238, 0.92);
+  background: rgba(21, 18, 15, 0.88);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -92,7 +200,7 @@ textarea {
 }
 
 .nav-links a:hover {
-  color: var(--accent);
+  color: var(--gold);
 }
 
 .main {
@@ -104,7 +212,7 @@ textarea {
 }
 
 .section.alt {
-  background: #ece7dc;
+  background: rgba(43, 37, 31, 0.72);
 }
 
 .container {
@@ -115,8 +223,8 @@ textarea {
 .hero {
   padding: 72px 0 56px;
   background:
-    linear-gradient(105deg, rgba(32, 39, 56, 0.84), rgba(142, 59, 47, 0.72)),
-    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80");
+    linear-gradient(105deg, rgba(12, 10, 8, 0.7), rgba(12, 10, 8, 0.24)),
+    url("/assets/biblioteca-da-alma-hero.jpeg");
   background-position: center;
   background-size: cover;
   color: #fffaf1;
@@ -195,8 +303,8 @@ textarea {
 }
 
 .button.primary {
-  background: var(--accent);
-  color: #fffaf1;
+  background: var(--gold);
+  color: #1c1308;
 }
 
 .button.primary:hover {
@@ -225,6 +333,7 @@ textarea {
   border-radius: 8px;
   padding: 24px;
   background: var(--panel);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
 }
 
 .card h2,
@@ -299,7 +408,7 @@ textarea {
   border-radius: 8px;
   padding: 12px 14px;
   background: #fffdf8;
-  color: var(--ink);
+  color: #221f1a;
 }
 
 .field textarea {
@@ -310,8 +419,9 @@ textarea {
 .study-hero {
   padding: 72px 0 58px;
   background:
-    linear-gradient(115deg, rgba(32, 39, 56, 0.92), rgba(34, 31, 26, 0.6)),
-    url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=80");
+    linear-gradient(115deg, rgba(12, 10, 8, 0.92), rgba(34, 31, 26, 0.62)),
+    url("/assets/akasha-cosmic-tools-bg.jpg"),
+    url("/assets/ars-akasha-luz-sombra.jpeg");
   background-position: center;
   background-size: cover;
   color: #fffaf1;
@@ -384,6 +494,7 @@ textarea {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
 }
 
 .intake-card {
@@ -495,7 +606,7 @@ textarea {
   border-top: 1px solid var(--line);
   padding: 28px 0;
   color: var(--muted);
-  background: #ece7dc;
+  background: rgba(21, 18, 15, 0.88);
 }
 
 .site-footer .container {
@@ -506,6 +617,17 @@ textarea {
 }
 
 @media (max-width: 760px) {
+  .site-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .site-sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
   .nav,
   .site-footer .container {
     align-items: flex-start;

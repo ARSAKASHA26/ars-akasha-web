@@ -10,7 +10,7 @@ export default function CheckoutPage() {
           <p>
             O pagamento do estudo personalizado comeca pelo formulario
             completo, para reunir nascimento, contato e pergunta antes do
-            Stripe.
+            pagamento seguro.
           </p>
         </div>
       </section>
@@ -21,9 +21,9 @@ export default function CheckoutPage() {
             <span className="eyebrow">estudo personalizado</span>
             <h2>Comece pelo pedido completo</h2>
             <p>
-              Assim o Stripe fica responsavel apenas pelo pagamento, enquanto
-              os dados essenciais do mapa ficam organizados no site para a
-              futura integracao com Supabase.
+              Assim os dados essenciais do estudo chegam organizados antes da
+              cobranca, preservando o cuidado da leitura desde o primeiro
+              passo.
             </p>
             <p className="price">R$ 297</p>
             <div className="actions" style={{ marginTop: 24 }}>

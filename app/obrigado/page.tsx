@@ -18,9 +18,9 @@ export default function ObrigadoPage() {
         <div className="container text-block">
           <h2>Proximos passos</h2>
           <p>
-            Quando o Stripe estiver ativo, esta pagina podera receber o
-            identificador da sessao e mostrar o status do pedido. Com Supabase,
-            tambem podera liberar acesso a biblioteca do cliente.
+            Seu pedido foi recebido. Em breve, esta pagina podera mostrar o
+            andamento da entrega e abrir acesso aos estudos guardados na sua
+            Biblioteca da Alma.
           </p>
           <div className="actions" style={{ marginTop: 28 }}>
             <Link className="button primary" href="/">

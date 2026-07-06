@@ -17,8 +17,38 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <div className="site-shell">
-          <header className="site-header">
-            <nav className="nav" aria-label="Navegacao principal">
+          <aside className="site-sidebar" aria-label="Resumo Ars Akasha">
+            <Link className="brand sidebar-brand" href="/">
+              <img src="/assets/ars-akasha-logo.jpeg" alt="" />
+              <span>
+                <strong>Ars Akasha</strong>
+                <small>Biblioteca viva</small>
+              </span>
+            </Link>
+            <section className="sidebar-public">
+              <p className="eyebrow">Biblioteca viva</p>
+              <h2>Conhecer. Transformar. Transcender.</h2>
+              <p>
+                Um espaco para leituras, estudos e sinais que ajudam a
+                compreender caminho, protecao, proposito e evolucao.
+              </p>
+              <div className="sidebar-highlight">
+                <strong>Leitura inicial gratuita</strong>
+                <span>A primeira mensagem abre o caminho para estudos mais profundos.</span>
+              </div>
+              <div className="sidebar-store">
+                <img src="/assets/akasha-mistica.jpeg" alt="" />
+                <div>
+                  <strong>Akasha Mistica</strong>
+                  <span>Produtos, leituras e estudos no mesmo ecossistema.</span>
+                </div>
+              </div>
+            </section>
+          </aside>
+
+          <div className="content-shell">
+            <header className="site-header">
+              <nav className="nav" aria-label="Navegacao principal">
               <Link className="brand" href="/">
                 <strong>Ars Akasha</strong>
                 <span>Mapas, leituras e estudos</span>
@@ -28,15 +58,16 @@ export default function RootLayout({
                 <Link href="/estudos-personalizados">Estudos</Link>
                 <Link href="/checkout">Checkout</Link>
               </div>
-            </nav>
-          </header>
-          <main className="main">{children}</main>
-          <footer className="site-footer">
-            <div className="container">
-              <span>Ars Akasha</span>
-              <span>Preparado para Vercel, Stripe e Supabase.</span>
-            </div>
-          </footer>
+              </nav>
+            </header>
+            <main className="main">{children}</main>
+            <footer className="site-footer">
+              <div className="container">
+                <span>Ars Akasha</span>
+                <span>Preparado para Vercel, Stripe e Supabase.</span>
+              </div>
+            </footer>
+          </div>
         </div>
       </body>
     </html>
