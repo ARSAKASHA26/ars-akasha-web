@@ -51,12 +51,12 @@ export default function RootLayout({
               <nav className="nav" aria-label="Navegacao principal">
               <Link className="brand" href="/">
                 <strong>Ars Akasha</strong>
-                <span>Mapas, leituras e estudos</span>
+                <span>Biblioteca da Alma</span>
               </Link>
               <div className="nav-links">
                 <Link href="/leitura-gratuita">Leitura gratuita</Link>
                 <Link href="/estudos-personalizados">Estudos</Link>
-                <Link href="/checkout">Checkout</Link>
+                <Link href="/estudos-personalizados">Comecar</Link>
               </div>
               </nav>
             </header>
@@ -64,7 +64,7 @@ export default function RootLayout({
             <footer className="site-footer">
               <div className="container">
                 <span>Ars Akasha</span>
-                <span>Preparado para Vercel, Stripe e Supabase.</span>
+                <span>Estrutura preparada para Vercel, Stripe e Supabase.</span>
               </div>
             </footer>
           </div>

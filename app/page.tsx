@@ -2,17 +2,38 @@ import Link from "next/link";
 
 const pillars = [
   {
-    title: "Leitura gratuita",
-    body: "Uma primeira leitura simbolica para abrir o campo, orientar o momento atual e apresentar a linguagem da Ars Akasha."
+    title: "Estudos personalizados",
+    tag: "Dossies sob medida",
+    body: "Uma entrega preparada a partir da sua historia, perguntas, ciclos e sinais do seu caminho espiritual.",
+    href: "/estudos-personalizados"
   },
   {
-    title: "Estudos personalizados",
-    body: "Dossies e leituras sob medida com base em nascimento, ciclos, arquetipos, caminhos espirituais e perguntas do cliente."
+    title: "E-books",
+    tag: "Estudo no seu ritmo",
+    body: "Guias para aprofundar temas da Ars Akasha com calma, retomando cada ensinamento quando sua alma pedir.",
+    href: "/"
+  },
+  {
+    title: "Oraculos e tiragens",
+    tag: "Clareza para decidir",
+    body: "Cartas, mensagens e caminhos para momentos de escolha, cura, protecao, amor e direcao espiritual.",
+    href: "/"
   },
   {
     title: "Biblioteca da Alma",
-    body: "Um espaco em construcao para guardar seus estudos, caminhos e registros importantes em uma jornada continua."
+    tag: "Em construcao",
+    body: "Seu futuro espaco para guardar estudos, registros, entregas e caminhos importantes da sua jornada.",
+    href: "/"
   }
+];
+
+const intentions = [
+  "Clareza",
+  "Proposito",
+  "Protecao",
+  "Cura emocional",
+  "Relacionamentos",
+  "Evolucao"
 ];
 
 export default function HomePage() {
@@ -31,9 +52,9 @@ export default function HomePage() {
           <span className="eyebrow">arsakasha.com</span>
           <h1>Biblioteca da Alma</h1>
           <p>
-            Estudos hermeticos para revelar o que sua alma trouxe, vive e veio
-            aprender. Um convite ao autoconhecimento, ao proposito e a evolucao
-            espiritual.
+            Estudos hermeticos, leituras e oraculos para revelar sinais do seu
+            caminho, abrir clareza sobre o momento presente e apoiar escolhas
+            com mais consciencia.
           </p>
           </div>
           <div className="actions">
@@ -48,25 +69,61 @@ export default function HomePage() {
       </section>
 
       <section className="section">
-        <div className="container grid">
+        <div className="container section-heading">
+          <span className="eyebrow">portais ars akasha</span>
+          <h2>Escolha por onde sua jornada pede para comecar.</h2>
+          <p>
+            A entrada pode ser simples: uma leitura gratuita, um estudo mais
+            profundo, um oraculo para o momento ou um material para estudar no
+            seu tempo.
+          </p>
+        </div>
+        <div className="container portal-grid">
           {pillars.map((pillar) => (
-            <article className="card" key={pillar.title}>
+            <Link className="portal-card" href={pillar.href} key={pillar.title}>
+              <span>{pillar.tag}</span>
               <h2>{pillar.title}</h2>
               <p>{pillar.body}</p>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
 
       <section className="section alt">
-        <div className="container text-block">
-          <span className="eyebrow">jornada ars akasha</span>
-          <h2>Uma leitura que acolhe sua historia antes de orientar seus proximos passos.</h2>
+        <div className="container intention-layout">
+          <div className="text-block">
+            <span className="eyebrow">escolha por intencao</span>
+            <h2>Quando a pergunta fica clara, o caminho comeca a responder.</h2>
+            <p>
+              Os estudos da Ars Akasha sao organizados para acolher o que voce
+              esta vivendo agora: relacoes, protecao, cura, escolhas,
+              amadurecimento espiritual e proposito.
+            </p>
+          </div>
+          <div className="intention-list" aria-label="Intencoes de estudo">
+            {intentions.map((intention) => (
+              <span key={intention}>{intention}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section closing-cta">
+        <div className="container cta-panel">
+          <span className="eyebrow">primeiro passo</span>
+          <h2>Receba uma primeira leitura e sinta se esta linguagem conversa com voce.</h2>
           <p>
-            A Ars Akasha une simbolos, perguntas profundas e caminhos
-            espirituais para transformar dados essenciais em clareza, direcao e
-            uma entrega feita com cuidado.
+            Se fizer sentido, o proximo passo pode ser um estudo personalizado
+            preparado com mais profundidade, cuidado e direcao.
           </p>
+          <div className="actions">
+            <Link className="button primary" href="/leitura-gratuita">
+              Comecar leitura gratuita
+            </Link>
+            <Link className="button secondary" href="/estudos-personalizados">
+              Escolher meu estudo
+            </Link>
+          </div>
         </div>
       </section>
     </>
