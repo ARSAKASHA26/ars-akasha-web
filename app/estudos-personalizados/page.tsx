@@ -1,67 +1,165 @@
 import Link from "next/link";
 
 const items = [
-  "Mapa simbolico individual com camadas espirituais e astrologicas.",
-  "Dossie em PDF com linguagem consultiva e orientacoes praticas.",
-  "Possibilidade futura de entrega dentro da biblioteca do cliente."
+  "Dados de nascimento estruturados para calculo do mapa e dos ciclos.",
+  "Pergunta principal do cliente guardada junto ao pedido.",
+  "Pagamento pelo Stripe sem cadastrar produto manualmente no painel.",
+  "Base pronta para salvar no Supabase e liberar a biblioteca do cliente."
 ];
 
 export default function EstudosPersonalizadosPage() {
   return (
     <>
-      <section className="page-title">
+      <section className="study-hero">
         <div className="container">
-          <span className="eyebrow">servico principal</span>
-          <h1>Estudos personalizados</h1>
-          <p>
-            Leituras profundas para clientes que desejam um estudo produzido a
-            partir da propria historia, perguntas e ciclos de vida.
-          </p>
+          <div className="study-hero-grid">
+            <div className="study-hero-copy">
+              <span className="eyebrow">servico principal</span>
+              <h1>Estudos personalizados</h1>
+              <p>
+                Um pedido completo para reunir nascimento, contato e pergunta
+                espiritual antes do pagamento. O Stripe cuida da cobranca; o
+                site guarda a estrutura que depois sera enviada ao Supabase.
+              </p>
+              <div className="actions">
+                <a className="button primary" href="#pedido">
+                  Preencher pedido
+                </a>
+                <Link className="button secondary" href="/leitura-gratuita">
+                  Ver leitura gratuita
+                </Link>
+              </div>
+            </div>
+            <aside className="study-summary" aria-label="Resumo do fluxo">
+              <span>Fluxo Ars Akasha</span>
+              <ol>
+                <li>Cliente informa nascimento e pergunta.</li>
+                <li>Site envia ao Stripe para pagamento.</li>
+                <li>Dados ficam prontos para Supabase.</li>
+                <li>O dossie nasce a partir dos calculos e da IA.</li>
+              </ol>
+            </aside>
+          </div>
         </div>
       </section>
 
       <section className="section">
-        <div className="container grid">
-          <article className="card">
-            <h2>Estudo completo</h2>
-            <p>
-              Uma entrega autoral, preparada para ser vendida pelo Stripe e
-              posteriormente vinculada ao cadastro do cliente no Supabase.
-            </p>
-          </article>
-          <article className="card">
-            <h2>Fluxo de compra</h2>
-            <p>
-              A pagina de checkout ja aponta para uma API que cria sessoes do
-              Stripe Checkout quando as chaves forem configuradas.
-            </p>
-          </article>
-          <article className="card">
-            <h2>Entrega futura</h2>
-            <p>
-              O webhook do Stripe esta separado para registrar pagamentos e
-              liberar conteudos quando o banco estiver ativo.
-            </p>
-          </article>
-        </div>
-      </section>
+        <div className="container study-layout">
+          <form className="intake-card" id="pedido" action="/api/checkout" method="POST">
+            <div className="panel-heading">
+              <div>
+                <span className="eyebrow">pedido do estudo</span>
+                <h2>Dados para preparar o dossie</h2>
+              </div>
+              <strong>R$ 297</strong>
+            </div>
 
-      <section className="section alt">
-        <div className="container text-block">
-          <h2>Incluido no primeiro produto</h2>
-          <ul className="feature-list">
-            {items.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-          <div className="actions" style={{ marginTop: 28 }}>
-            <Link className="button primary" href="/checkout">
-              Ir para checkout
-            </Link>
-            <Link className="button light" href="/leitura-gratuita">
-              Ver leitura gratuita
-            </Link>
-          </div>
+            <div className="form-section">
+              <h3>Contato</h3>
+              <div className="form-grid two">
+                <label className="field">
+                  <span>Nome completo</span>
+                  <input name="name" type="text" autoComplete="name" required />
+                </label>
+                <label className="field">
+                  <span>E-mail</span>
+                  <input name="email" type="email" autoComplete="email" required />
+                </label>
+                <label className="field">
+                  <span>WhatsApp</span>
+                  <input
+                    name="whatsapp"
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="(00) 00000-0000"
+                    required
+                  />
+                </label>
+                <label className="field">
+                  <span>Foco do estudo</span>
+                  <select name="study_focus" defaultValue="Mapa espiritual completo">
+                    <option>Mapa espiritual completo</option>
+                    <option>Relacionamentos e ciclos afetivos</option>
+                    <option>Vocacao, trabalho e prosperidade</option>
+                    <option>Protecao espiritual e caminhos abertos</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div className="form-section">
+              <h3>Nascimento</h3>
+              <div className="form-grid three">
+                <label className="field">
+                  <span>Data de nascimento</span>
+                  <input name="birth_date" type="date" required />
+                </label>
+                <label className="field">
+                  <span>Hora de nascimento</span>
+                  <input name="birth_time" type="time" required />
+                </label>
+                <label className="field">
+                  <span>Cidade de nascimento</span>
+                  <input
+                    name="birth_city"
+                    type="text"
+                    placeholder="Ex.: Sao Paulo"
+                    required
+                  />
+                </label>
+                <label className="field">
+                  <span>Estado</span>
+                  <input name="birth_state" type="text" placeholder="Ex.: SP" />
+                </label>
+                <label className="field">
+                  <span>Pais</span>
+                  <input
+                    name="birth_country"
+                    type="text"
+                    defaultValue="Brasil"
+                    required
+                  />
+                </label>
+              </div>
+            </div>
+
+            <label className="field">
+              <span>Pergunta principal ou momento de vida</span>
+              <textarea
+                name="main_question"
+                placeholder="Conte em poucas linhas o que voce deseja compreender neste estudo."
+                required
+              />
+            </label>
+
+            <label className="consent-box">
+              <input name="consent" type="checkbox" required />
+              <span>
+                Autorizo a Ars Akasha a usar estes dados para preparar meu
+                estudo personalizado e entrar em contato sobre este pedido.
+              </span>
+            </label>
+
+            <button className="button primary submit-button" type="submit">
+              Continuar para pagamento seguro
+            </button>
+          </form>
+
+          <aside className="process-panel">
+            <span className="eyebrow">como sera usado</span>
+            <h2>Do formulario ao dossie</h2>
+            <p>
+              Estes campos substituem o cadastro limitado dos e-commerces. A
+              data, a hora e a cidade de nascimento ficam ligadas ao pedido
+              para alimentar os calculos do mapa, a organizacao do dossie e a
+              escrita final.
+            </p>
+            <ul className="feature-list compact">
+              {items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </aside>
         </div>
       </section>
     </>

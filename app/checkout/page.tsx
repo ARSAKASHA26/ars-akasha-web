@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CheckoutPage() {
   return (
     <>
@@ -6,8 +8,9 @@ export default function CheckoutPage() {
           <span className="eyebrow">pagamento seguro</span>
           <h1>Checkout</h1>
           <p>
-            Esta pagina esta pronta para enviar o cliente ao Stripe Checkout
-            quando o produto e as chaves forem configurados.
+            O pagamento do estudo personalizado comeca pelo formulario
+            completo, para reunir nascimento, contato e pergunta antes do
+            Stripe.
           </p>
         </div>
       </section>
@@ -16,30 +19,21 @@ export default function CheckoutPage() {
         <div className="container">
           <div className="checkout-panel">
             <span className="eyebrow">estudo personalizado</span>
-            <h2>Estudo Ars Akasha</h2>
+            <h2>Comece pelo pedido completo</h2>
             <p>
-              Pagamento processado pelo Stripe. Apos a confirmacao, o cliente
-              retorna para a pagina de obrigado.
+              Assim o Stripe fica responsavel apenas pelo pagamento, enquanto
+              os dados essenciais do mapa ficam organizados no site para a
+              futura integracao com Supabase.
             </p>
             <p className="price">R$ 297</p>
-            <form action="/api/checkout" method="POST">
-              <div className="field">
-                <label htmlFor="name">Nome</label>
-                <input id="name" name="name" placeholder="Nome do cliente" />
-              </div>
-              <div className="field">
-                <label htmlFor="email">E-mail</label>
-                <input
-                  id="email"
-                  name="email"
-                  placeholder="cliente@email.com"
-                  type="email"
-                />
-              </div>
-              <button className="button primary" type="submit">
-                Pagar com Stripe
-              </button>
-            </form>
+            <div className="actions" style={{ marginTop: 24 }}>
+              <Link className="button primary" href="/estudos-personalizados#pedido">
+                Preencher dados do estudo
+              </Link>
+              <Link className="button light" href="/leitura-gratuita">
+                Ver leitura gratuita
+              </Link>
+            </div>
           </div>
         </div>
       </section>
