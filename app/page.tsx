@@ -18,8 +18,16 @@ const pillars = [
 export default function HomePage() {
   return (
     <>
-      <section className="hero">
-        <div className="hero-inner">
+      <section className="hero" aria-label="Ars Akasha - Biblioteca da Alma">
+        <span className="sr-only">
+          Ars Akasha, a Biblioteca da Alma. Estudos hermeticos para
+          autoconhecimento, proposito e evolucao espiritual.
+        </span>
+      </section>
+
+      <section className="intro-band">
+        <div className="container intro-grid">
+          <div>
           <span className="eyebrow">arsakasha.com</span>
           <h1>Biblioteca da Alma</h1>
           <p>
@@ -27,6 +35,7 @@ export default function HomePage() {
             aprender. Um convite ao autoconhecimento, ao proposito e a evolucao
             espiritual.
           </p>
+          </div>
           <div className="actions">
             <Link className="button primary" href="/leitura-gratuita">
               Comecar leitura gratuita
