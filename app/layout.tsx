@@ -33,8 +33,8 @@ export default function RootLayout({
                 compreender caminho, protecao, proposito e evolucao.
               </p>
               <div className="sidebar-highlight">
-                <strong>Leitura inicial gratuita</strong>
-                <span>A primeira mensagem abre o caminho para estudos mais profundos.</span>
+                <strong>Primeiro caminho</strong>
+                <span>Comece com calma, entenda a linguagem e avance para estudos mais profundos.</span>
               </div>
               <div className="sidebar-store">
                 <img src="/assets/akasha-mistica.jpeg" alt="" />
@@ -56,7 +56,7 @@ export default function RootLayout({
               <div className="nav-links">
                 <Link href="/leitura-gratuita">Leitura gratuita</Link>
                 <Link href="/estudos-personalizados">Estudos</Link>
-                <Link href="/estudos-personalizados">Comecar</Link>
+                <Link href="/">E-books</Link>
               </div>
               </nav>
             </header>

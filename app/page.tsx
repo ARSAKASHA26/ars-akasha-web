@@ -58,24 +58,24 @@ export default function HomePage() {
           </p>
           </div>
           <div className="actions">
-            <Link className="button primary" href="/leitura-gratuita">
-              Comecar leitura gratuita
+            <Link className="button primary" href="/estudos-personalizados">
+              Conhecer os estudos
             </Link>
-            <Link className="button secondary" href="/estudos-personalizados">
-              Ver estudos personalizados
+            <Link className="button secondary" href="#portais">
+              Explorar caminhos
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="portais">
         <div className="container section-heading">
           <span className="eyebrow">portais ars akasha</span>
           <h2>Escolha por onde sua jornada pede para comecar.</h2>
           <p>
-            A entrada pode ser simples: uma leitura gratuita, um estudo mais
-            profundo, um oraculo para o momento ou um material para estudar no
-            seu tempo.
+            Cada portal tem uma funcao diferente: aprofundar uma pergunta,
+            estudar no seu ritmo, buscar uma mensagem para o momento ou guardar
+            sua propria jornada espiritual.
           </p>
         </div>
         <div className="container portal-grid">
@@ -110,7 +110,7 @@ export default function HomePage() {
 
       <section className="section closing-cta">
         <div className="container cta-panel">
-          <span className="eyebrow">primeiro passo</span>
+          <span className="eyebrow">porta de entrada</span>
           <h2>Receba uma primeira leitura e sinta se esta linguagem conversa com voce.</h2>
           <p>
             Se fizer sentido, o proximo passo pode ser um estudo personalizado
