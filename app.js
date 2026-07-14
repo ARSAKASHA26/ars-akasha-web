@@ -358,22 +358,6 @@ const plans = [
     ],
   },
   {
-    id: "seu-exu-e-sua-pomba-gira",
-    name: "Seu Exu e Sua Pomba Gira",
-    price: "R$ 6,90",
-    badge: "Esquerda",
-    summary: "Descubra qual Exu e qual Pomba Gira ressoam com sua jornada a partir da posicao de Mercurio e Lilith no seu mapa natal. Um estudo simbolico e ressonante sobre as forcas da esquerda.",
-    features: [
-      "Calculo por Swiss Ephemeris",
-      "Seu Exu — via posicao de Mercurio",
-      "Sua Pomba Gira — via posicao de Lilith",
-      "36 Exus e 36 Pomba Giras mapeados",
-      "Resultado imediato no app",
-      "R$ 6,90 por entidade",
-    ],
-    link: "exu-pomba-gira.html",
-  },
-  {
     id: "ebook-exu-pinga-fogo",
     name: "Exu Pinga Fogo — Guardiao do Cruzeiro e da Calunga Pequena",
     price: "R$ 69,90",
@@ -445,11 +429,6 @@ const ebooksGratuitos = [
 const whatsappConfig = {
   label: "Loja Umuarama Sede",
   number: "5544997038883",
-};
-
-const oracleAppConfig = {
-  url: "https://oraculosarsakasha.netlify.app/",
-  label: "Oraculos ARS AKASHA",
 };
 
 function getRandomFeaturedPlanId() {
@@ -2272,8 +2251,6 @@ function generateReading(data) {
       ["Modalidade", modality],
       ["Caminho de vida", lifePath],
       ["Numero do nome", nameNumber],
-      ["Arcano da alma", `${soulArcana.number} - ${soulArcana.name}`],
-      ["Carta do caminho", `${pathCard.number} - ${pathCard.name}`],
       ["Runa da jornada", `${journeyRune.number} - ${journeyRune.name}`],
       ["Energia do dia", dayEnergy],
       ["Energia do ano", yearEnergy],
@@ -2410,25 +2387,9 @@ function renderReading(reading, data) {
         <strong>Sua assinatura espiritual</strong>
         <p>${reading.signature}</p>
       </div>
-      <div class="reading-section daily-draw-section">
-        <strong>Mensagem de hoje para voce do Baralho Cigano</strong>
-        <p>${reading.lenormandMessage}</p>
-      </div>
-      <div class="reading-section daily-draw-section">
-        <strong>Mensagem de hoje para voce do Tarot</strong>
-        <p>${reading.tarotMessage}</p>
-      </div>
       <div class="reading-section">
         <strong>A sua numerologia</strong>
         <p>${reading.numerology}</p>
-      </div>
-      <div class="reading-section">
-        <strong>Arcano da Alma</strong>
-        <p>${reading.tarot}</p>
-      </div>
-      <div class="reading-section">
-        <strong>Carta do Caminho</strong>
-        <p>${reading.lenormand}</p>
       </div>
       <div class="reading-section">
         <strong>Runa da Jornada</strong>
@@ -2683,7 +2644,7 @@ els.clearReadingButton.addEventListener("click", () => {
   els.readingPanel.innerHTML = `
     <p class="eyebrow">Resultado</p>
     <h2>Primeira leitura pronta para nascer</h2>
-    <p class="detail-summary">Preencha seus dados para receber uma primeira leitura espiritual com sinais do seu caminho, numero de sorte, anjo guardiao, oraculos e praticas de bem-estar.</p>
+    <p class="detail-summary">Preencha seus dados para receber uma primeira leitura espiritual com sinais do seu caminho, numero de sorte, anjo guardiao e praticas de bem-estar.</p>
     <div class="offer-strip">
       <strong>Depois da leitura gratuita</strong>
       <span>Voce podera escolher um estudo mais profundo pelo WhatsApp.</span>

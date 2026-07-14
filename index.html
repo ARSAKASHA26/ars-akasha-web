@@ -26,7 +26,7 @@
         <section class="sidebar-public" aria-label="Resumo da leitura ARS AKASHA">
           <p class="eyebrow">Biblioteca viva</p>
           <h2>Conhecer. Transformar. Transcender.</h2>
-          <p>O ARS AKASHA une nascimento, simbolos espirituais e oraculos para abrir uma primeira visao sobre caminho, protecao e bem-estar.</p>
+          <p>O ARS AKASHA une nascimento e simbolos espirituais para abrir uma primeira visao sobre caminho, protecao e bem-estar.</p>
           <div class="sidebar-highlight">
             <strong>Leitura inicial gratuita</strong>
             <span>A primeira mensagem aparece no formulario ao lado.</span>
@@ -38,11 +38,6 @@
               <span>Cristais, incensos, ervas e produtos espirituais para acompanhar sua leitura.</span>
             </div>
           </div>
-          <a class="sidebar-oracle-button" href="https://oraculosarsakasha.netlify.app/" target="_blank" rel="noreferrer">
-            <span>Oraculos ARS AKASHA</span>
-            <strong>Tarot, cartas e tiragens</strong>
-            <small>Abra o app de oraculos para consultas rapidas.</small>
-          </a>
         </section>
 
         <section class="vault-status admin-only" aria-label="Metodo protegido" hidden>
@@ -91,12 +86,12 @@
           <div class="hero-copy">
             <p class="eyebrow">Leitura gratuita</p>
             <h2>Receba uma primeira leitura espiritual feita a partir dos seus dados de nascimento.</h2>
-            <p>Em poucos segundos, o ARS AKASHA revela sinais iniciais do seu caminho: anjo guardiao, numerologia, Odu Ori, ascendente, oraculos, chakra, pedra, cor, salmo e uma pratica simples de bem-estar.</p>
+            <p>Em poucos segundos, o ARS AKASHA revela sinais iniciais do seu caminho: anjo guardiao, numerologia, Odu Ori, ascendente, chakra, pedra, cor, salmo e uma pratica simples de bem-estar.</p>
             <div class="hero-benefits" aria-label="O que a leitura mostra">
               <span><img src="assets/ars-akasha-logo.jpeg" alt="">Anjo guardiao</span>
               <span><img src="assets/ars-akasha-logo.jpeg" alt="">Odu Ori</span>
               <span><img src="assets/ars-akasha-logo.jpeg" alt="">Numerologia</span>
-              <span><img src="assets/ars-akasha-logo.jpeg" alt="">Tarot e Cigano</span>
+              <span><img src="assets/ars-akasha-logo.jpeg" alt="">Estudos personalizados</span>
               <span><img src="assets/ars-akasha-logo.jpeg" alt="">Chakra e pedra</span>
               <span><img src="assets/ars-akasha-logo.jpeg" alt="">Compra pelo WhatsApp</span>
             </div>
@@ -159,7 +154,7 @@
           <article class="reading-panel" id="readingPanel" aria-live="polite">
             <p class="eyebrow">Resultado</p>
             <h2>Primeira leitura pronta para nascer</h2>
-            <p class="detail-summary">Preencha seus dados para receber uma primeira leitura espiritual com sinais do seu caminho, numero de sorte, anjo guardiao, oraculos e praticas de bem-estar.</p>
+            <p class="detail-summary">Preencha seus dados para receber uma primeira leitura espiritual com sinais do seu caminho, numero de sorte, anjo guardiao e praticas de bem-estar.</p>
             <div class="offer-strip">
               <strong>Depois da leitura gratuita</strong>
               <span>Voce podera escolher um estudo mais profundo pelo WhatsApp.</span>
@@ -310,18 +305,6 @@
           <button class="primary-button" id="saveNoteButton" value="default" type="button">Salvar</button>
         </div>
       </form>
-    </dialog>
-
-    <dialog class="milestone-dialog" id="milestoneDialog">
-      <div class="milestone-content">
-        <p class="eyebrow">Conquista desbloqueada</p>
-        <h2 id="milestoneTitle"></h2>
-        <p class="milestone-body">Voce visitou o ARS AKASHA por varios dias seguidos — isso significa que o seu caminho esta em movimento. Como reconhecimento, voce ganhou uma tiragem gratuita no app de Oraculos ARS AKASHA.</p>
-        <div class="milestone-actions">
-          <a class="primary-button link-button" id="milestoneWhatsApp" href="#" target="_blank" rel="noreferrer">Falar no WhatsApp para receber seu codigo</a>
-          <button class="ghost-button" id="milestoneClose" type="button">Fechar</button>
-        </div>
-      </div>
     </dialog>
 
     <!-- Formulario oculto para Netlify Forms - captura leads -->
@@ -659,37 +642,6 @@
         return streak;
       }
 
-      // ── milestone ─────────────────────────────────────────
-      function checkMilestone(streak) {
-        if (streak !== 5) return;
-        var celebrated = [];
-        try { celebrated = JSON.parse(lsGet('arsCelebratedMilestones') || '[]'); } catch(e) {}
-        if (celebrated.indexOf(5) !== -1) return;
-        celebrated.push(5);
-        lsSet('arsCelebratedMilestones', JSON.stringify(celebrated));
-        showMilestone(5);
-      }
-
-      function showMilestone(days) {
-        var dialog = document.getElementById('milestoneDialog');
-        var titleEl = document.getElementById('milestoneTitle');
-        var waLink = document.getElementById('milestoneWhatsApp');
-        if (!dialog) return;
-        if (titleEl) titleEl.textContent = days + ' dias seguidos de presenca';
-        if (waLink) {
-          var txt = 'Ola! Completei ' + days + ' dias seguidos no ARS AKASHA e gostaria de receber minha tiragem gratuita no app de Oraculos.';
-          waLink.href = 'https://wa.me/' + (whatsappConfig && whatsappConfig.number ? whatsappConfig.number : '5544997038883') + '?text=' + encodeURIComponent(txt);
-        }
-        dialog.showModal();
-      }
-
-      var closeBtn = document.getElementById('milestoneClose');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', function () {
-          document.getElementById('milestoneDialog').close();
-        });
-      }
-
       // ── energy card ───────────────────────────────────────
       function renderEnergyCard() {
         var textEl = document.getElementById('dailyEnergyText');
@@ -735,7 +687,6 @@
           if (labelEl) labelEl.textContent = streak === 1 ? 'dia seguido' : 'dias seguidos';
         }
 
-        checkMilestone(streak);
       }
 
       renderEnergyCard();
