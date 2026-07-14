@@ -196,7 +196,7 @@ const plans = [
   {
     id: "caminhos-de-vidas-passadas",
     name: "Caminhos de Vidas Passadas",
-    price: "R$ 120,90",
+    price: "R$ 150,90",
     badge: "Akashico",
     summary: "Um estudo sobre talentos antigos, padroes que se repetem e memorias espirituais que ainda influenciam sua vida atual.",
     features: [
@@ -211,7 +211,7 @@ const plans = [
   {
     id: "parceiro-ideal",
     name: "Parceiro Ideal",
-    price: "R$ 120,90",
+    price: "R$ 150,90",
     badge: "Amor",
     summary: "Revela o perfil energetico do parceiro mais compativel com sua essencia, seus padroes afetivos e necessidades emocionais.",
     features: [
@@ -226,7 +226,7 @@ const plans = [
   {
     id: "perfil-mediunico",
     name: "Perfil Mediunico",
-    price: "R$ 120,90",
+    price: "R$ 150,90",
     badge: "Mediunidade",
     summary: "Revela sua sensibilidade espiritual, formas de mediunidade, missao de alma e orientacoes para desenvolver seus dons com equilibrio.",
     features: [
@@ -256,7 +256,7 @@ const plans = [
   {
     id: "feridas-da-alma",
     name: "Feridas da Alma",
-    price: "R$ 198,90",
+    price: "R$ 225,90",
     badge: "Cura",
     summary: "Identifica marcas emocionais profundas, padroes inconscientes, herancas espirituais e ciclos que pedem transformacao.",
     features: [
@@ -425,6 +425,7 @@ const ebooksGratuitos = [
   { id: "duas-almas-um-caminho", name: "Duas Almas Um Caminho", badge: "Amor", summary: "Sobre encontros de alma, vinculos karmicos e o que une duas pessoas alem do acaso." },
   { id: "os-pontos-invisiveis", name: "Os Pontos Invisiveis do Seu Destino", badge: "Destino", summary: "Os nos ocultos da jornada — o que molda sua vida antes mesmo de voce perceber." },
   { id: "a-energia-que-ninguem-te-apresentou", name: "A Energia Que Ninguem Te Apresentou", badge: "Energia", summary: "Forca espiritual que esta presente em voce e que poucos conseguem nomear ou reconhecer." },
+  { id: "a-verdade-sobre-os-orixas", name: "A Verdade Sobre os Orixás", badge: "Orixás", summary: "Descubra as 7 áreas da sua vida regidas pelas forças dos Orixás." },
   { id: "magia-planetaria", name: "Magia Planetaria", badge: "Magia", summary: "Os sete planetas, seus regentes, suas horas e como trabalhar com essas forca no cotidiano." },
   { id: "os-16-odus", name: "Os 16 Odus Principais", badge: "Odus", summary: "Os 16 Odus-raiz de Ifa: essencia, luz, sombra e o que cada um revela sobre a jornada da alma." },
   { id: "orixas", name: "Orixas", badge: "Orixas", summary: "Quem sao os Orixas, seus dominios, suas qualidades e como se manifestam na vida de cada pessoa." },
@@ -2695,4 +2696,3 @@ if (localStorage.getItem("akasha-theme") === "light") {
 }
 
 render();
-
