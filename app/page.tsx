@@ -9,9 +9,9 @@ const pillars = [
   },
   {
     title: "E-books",
-    tag: "Estudo no seu ritmo",
-    body: "Guias para aprofundar temas da Ars Akasha com calma, retomando cada ensinamento quando sua alma pedir.",
-    href: "/"
+    tag: "Biblioteca gratuita",
+    body: "Dezenove leituras para aprofundar temas da Ars Akasha com calma e retomar cada ensinamento quando precisar.",
+    href: "/ebooks"
   },
   {
     title: "Oraculos e tiragens",
@@ -120,8 +120,8 @@ export default function HomePage() {
             <Link className="button primary" href="/leitura-gratuita">
               Comecar leitura gratuita
             </Link>
-            <Link className="button secondary" href="/estudos-personalizados">
-              Escolher meu estudo
+            <Link className="button secondary" href="/ebooks">
+              Abrir biblioteca gratuita
             </Link>
           </div>
         </div>

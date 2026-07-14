@@ -787,16 +787,224 @@ textarea {
   gap: 18px;
 }
 
+.library-title {
+  background:
+    linear-gradient(110deg, rgba(12, 10, 8, 0.94), rgba(30, 23, 16, 0.72)),
+    url("/assets/akasha-cosmic-tools-bg.jpg") center / cover;
+}
+
+.library-count {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid rgba(216, 168, 74, 0.5);
+  padding-top: 16px;
+  color: var(--muted);
+}
+
+.library-count strong {
+  color: var(--gold);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.ebook-grid,
+.studies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.ebook-card,
+.study-card {
+  min-width: 0;
+  border: 1px solid rgba(216, 168, 74, 0.34);
+  border-radius: 8px;
+  background: rgba(29, 24, 20, 0.94);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.ebook-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.ebook-cover {
+  position: relative;
+  aspect-ratio: 3 / 4.1;
+  overflow: hidden;
+  background: #0f0c09;
+}
+
+.ebook-cover img {
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.ebook-card:hover .ebook-cover img {
+  transform: scale(1.025);
+}
+
+.ebook-cover > span {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 1;
+  border: 1px solid rgba(241, 199, 105, 0.72);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(17, 13, 9, 0.9);
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ebook-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px;
+}
+
+.ebook-copy small,
+.study-card-heading span {
+  color: var(--gold);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ebook-copy h2,
+.study-card h2,
+.selection-prompt h2 {
+  margin: 10px 0 12px;
+  font-size: 1.55rem;
+  line-height: 1.12;
+}
+
+.ebook-copy p,
+.study-card p,
+.selection-prompt p,
+.form-note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.ebook-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.ebook-actions .button {
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+.library-cta .button {
+  width: fit-content;
+}
+
+.study-card {
+  min-height: 510px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.study-card:hover,
+.study-card.selected {
+  transform: translateY(-3px);
+  border-color: rgba(241, 199, 105, 0.82);
+}
+
+.study-card.selected {
+  box-shadow: inset 0 0 0 1px rgba(241, 199, 105, 0.3), 0 20px 54px rgba(0, 0, 0, 0.34);
+}
+
+.study-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.study-card-heading strong {
+  color: var(--accent-strong);
+  white-space: nowrap;
+}
+
+.study-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 20px 0 24px;
+  padding: 0;
+  color: rgba(244, 234, 219, 0.88);
+  list-style: none;
+}
+
+.study-card li {
+  border-left: 2px solid rgba(216, 168, 74, 0.58);
+  padding-left: 10px;
+  line-height: 1.4;
+}
+
+.study-card .button {
+  width: 100%;
+  margin-top: auto;
+}
+
+.selection-prompt {
+  max-width: 780px;
+  text-align: center;
+}
+
+.selection-prompt h2 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.selection-prompt p {
+  margin-bottom: 24px;
+  font-size: 1.05rem;
+}
+
+.form-note {
+  font-size: 0.84rem;
+  text-align: center;
+}
+
+.change-study-link {
+  display: inline-block;
+  margin-top: 22px;
+  color: var(--gold);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 1100px) {
+  .ebook-grid,
+  .studies-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 760px) {
   .site-shell {
     grid-template-columns: 1fr;
   }
 
   .site-sidebar {
-    position: static;
-    height: auto;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
+    display: none;
   }
 
   .nav,
@@ -830,8 +1038,18 @@ textarea {
 
   .portal-grid,
   .intention-layout,
-  .intention-list {
+  .intention-list,
+  .ebook-grid,
+  .studies-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ebook-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .study-card {
+    min-height: auto;
   }
 
   .study-hero-grid,
@@ -839,6 +1057,10 @@ textarea {
   .form-grid.two,
   .form-grid.three {
     grid-template-columns: 1fr;
+  }
+
+  .study-hero h1 {
+    font-size: 2.75rem;
   }
 
   .study-summary,

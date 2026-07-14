@@ -6,11 +6,10 @@ export default function CheckoutPage() {
       <section className="page-title">
         <div className="container">
           <span className="eyebrow">pagamento seguro</span>
-          <h1>Checkout</h1>
+          <h1>Seu estudo começa pela escolha.</h1>
           <p>
-            O pagamento do estudo personalizado comeca pelo formulario
-            completo, para reunir nascimento, contato e pergunta antes do
-            pagamento seguro.
+            Cada estudo tem um valor e uma finalidade diferentes. Escolha
+            primeiro o que deseja compreender e depois informe seus dados.
           </p>
         </div>
       </section>
@@ -19,19 +18,17 @@ export default function CheckoutPage() {
         <div className="container">
           <div className="checkout-panel">
             <span className="eyebrow">estudo personalizado</span>
-            <h2>Comece pelo pedido completo</h2>
+            <h2>Conheça os estudos disponíveis</h2>
             <p>
-              Assim os dados essenciais do estudo chegam organizados antes da
-              cobranca, preservando o cuidado da leitura desde o primeiro
-              passo.
+              O formulário será aberto com o nome e o valor corretos. Assim
+              seu pedido chega organizado desde o primeiro contato.
             </p>
-            <p className="price">R$ 297</p>
             <div className="actions" style={{ marginTop: 24 }}>
-              <Link className="button primary" href="/estudos-personalizados#pedido">
-                Preencher dados do estudo
+              <Link className="button primary" href="/estudos-personalizados">
+                Escolher meu estudo
               </Link>
-              <Link className="button light" href="/leitura-gratuita">
-                Ver leitura gratuita
+              <Link className="button light" href="/ebooks">
+                Ver e-books gratuitos
               </Link>
             </div>
           </div>

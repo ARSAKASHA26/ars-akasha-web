@@ -56,7 +56,7 @@ export default function RootLayout({
               <div className="nav-links">
                 <Link href="/leitura-gratuita">Leitura gratuita</Link>
                 <Link href="/estudos-personalizados">Estudos</Link>
-                <Link href="/">E-books</Link>
+                <Link href="/ebooks">E-books gratuitos</Link>
               </div>
               </nav>
             </header>
