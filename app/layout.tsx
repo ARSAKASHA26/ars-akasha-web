@@ -5,7 +5,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Ars Akasha",
   description:
-    "Leituras simbólicas, estudos personalizados e biblioteca espiritual da Ars Akasha."
+    "Leituras simbólicas, estudos personalizados e biblioteca espiritual da Ars Akasha.",
+  icons: {
+    icon: "/assets/favicon-192.png",
+    shortcut: "/assets/favicon-192.png",
+    apple: "/assets/favicon-192.png"
+  }
 };
 
 export default function RootLayout({

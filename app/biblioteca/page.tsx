@@ -28,17 +28,132 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
     redirect("/entrar");
   }
 
-  const [profileResult, readingsResult, ordersResult, itemsResult] = await Promise.all([
+  const [profileResult, readingsResult, ordersResult, itemsResult, consentResult] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", userId).maybeSingle(),
     supabase.from("free_readings").select("id, created_at").order("created_at", { ascending: false }),
     supabase.from("study_orders").select("id, study_name, status, created_at").order("created_at", { ascending: false }),
-    supabase.from("library_items").select("id, title, description, item_type, status, storage_path, created_at").order("created_at", { ascending: false })
+    supabase.from("library_items").select("id, title, description, item_type, status, storage_path, created_at").order("created_at", { ascending: false }),
+    supabase
+      .from("consents")
+      .select("id")
+      .eq("user_id", userId)
+      .eq("purpose", "personalized_services")
+      .is("revoked_at", null)
+      .maybeSingle()
   ]);
 
   const profile = profileResult.data;
   const readings = readingsResult.data ?? [];
   const orders = ordersResult.data ?? [];
   const items = itemsResult.data ?? [];
+  const hasPersonalizedConsent = Boolean(consentResult.data);
+  const profileIsComplete = Boolean(
+    profile?.full_name &&
+      profile?.whatsapp &&
+      profile?.birth_date &&
+      profile?.birth_time &&
+      profile?.birth_city &&
+      profile?.birth_state &&
+      profile?.birth_country &&
+      hasPersonalizedConsent
+  );
+
+  if (!profileIsComplete) {
+    return (
+      <>
+        <section className="page-title account-title">
+          <div className="container library-heading">
+            <div>
+              <span className="eyebrow">seu primeiro acesso</span>
+              <h1>Complete seu cadastro</h1>
+              <p>
+                Preencha uma única vez. Seus dados ficarão guardados para suas
+                leituras, estudos e Biblioteca da Alma.
+              </p>
+            </div>
+            <form action="/auth/sair" method="POST">
+              <button className="button light" type="submit">Sair</button>
+            </form>
+          </div>
+        </section>
+
+        <section className="section" id="meus-dados">
+          <div className="container onboarding-content">
+            <div className="onboarding-intro">
+              <span className="eyebrow">cadastro único</span>
+              <h2>Seus dados acompanham você.</h2>
+              <p>
+                Assim você não precisará preencher as mesmas informações a cada
+                novo pedido.
+              </p>
+            </div>
+
+            <form className="profile-form" action={updateProfile}>
+              {params.erro ? (
+                <p className="form-error" role="alert">
+                  {params.erro === "dados"
+                    ? "Preencha todos os campos para continuar."
+                    : "Aceite o uso dos dados para suas leituras e estudos."}
+                </p>
+              ) : null}
+
+              <div className="form-grid two">
+                <label className="field">
+                  <span>Nome completo</span>
+                  <input name="full_name" type="text" autoComplete="name" defaultValue={profile?.full_name ?? ""} required />
+                </label>
+                <label className="field">
+                  <span>E-mail</span>
+                  <input type="email" value={profile?.email ?? ""} disabled />
+                </label>
+                <label className="field">
+                  <span>WhatsApp</span>
+                  <input name="whatsapp" type="tel" autoComplete="tel" defaultValue={profile?.whatsapp ?? ""} required />
+                </label>
+              </div>
+
+              <div className="form-grid three">
+                <label className="field">
+                  <span>Data de nascimento</span>
+                  <input name="birth_date" type="date" defaultValue={profile?.birth_date ?? ""} required />
+                </label>
+                <label className="field">
+                  <span>Hora de nascimento</span>
+                  <input name="birth_time" type="time" defaultValue={profile?.birth_time?.slice(0, 5) ?? ""} required />
+                </label>
+                <label className="field">
+                  <span>Cidade onde nasceu</span>
+                  <input name="birth_city" type="text" defaultValue={profile?.birth_city ?? ""} required />
+                </label>
+                <label className="field">
+                  <span>Estado</span>
+                  <input name="birth_state" type="text" defaultValue={profile?.birth_state ?? ""} required />
+                </label>
+                <label className="field">
+                  <span>País</span>
+                  <input name="birth_country" type="text" defaultValue={profile?.birth_country ?? "Brasil"} required />
+                </label>
+              </div>
+
+              {!hasPersonalizedConsent ? (
+                <label className="consent-box compact-consent">
+                  <input name="personalized_consent" type="checkbox" required />
+                  <span>
+                    Autorizo o uso destes dados somente para minhas leituras,
+                    estudos e atendimento, conforme o <Link href="/privacidade">Aviso de Privacidade</Link>.
+                  </span>
+                </label>
+              ) : null}
+
+              <button className="button primary" type="submit">
+                Guardar e entrar na minha biblioteca
+              </button>
+            </form>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
@@ -124,14 +239,14 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
               ) : null}
               {params.erro ? (
                 <p className="form-error" role="alert">
-                  Confira o consentimento e tente salvar novamente.
+                  Preencha todos os campos e tente salvar novamente.
                 </p>
               ) : null}
 
               <div className="form-grid two">
                 <label className="field">
                   <span>Nome completo</span>
-                  <input name="full_name" type="text" defaultValue={profile?.full_name ?? ""} />
+                  <input name="full_name" type="text" defaultValue={profile?.full_name ?? ""} required />
                 </label>
                 <label className="field">
                   <span>E-mail</span>
@@ -139,42 +254,38 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
                 </label>
                 <label className="field">
                   <span>WhatsApp</span>
-                  <input name="whatsapp" type="tel" defaultValue={profile?.whatsapp ?? ""} />
+                  <input name="whatsapp" type="tel" defaultValue={profile?.whatsapp ?? ""} required />
                 </label>
               </div>
 
               <div className="form-grid three">
                 <label className="field">
                   <span>Data de nascimento</span>
-                  <input name="birth_date" type="date" defaultValue={profile?.birth_date ?? ""} />
+                  <input name="birth_date" type="date" defaultValue={profile?.birth_date ?? ""} required />
                 </label>
                 <label className="field">
                   <span>Hora de nascimento</span>
-                  <input name="birth_time" type="time" defaultValue={profile?.birth_time?.slice(0, 5) ?? ""} />
+                  <input name="birth_time" type="time" defaultValue={profile?.birth_time?.slice(0, 5) ?? ""} required />
                 </label>
                 <label className="field">
                   <span>Cidade onde nasceu</span>
-                  <input name="birth_city" type="text" defaultValue={profile?.birth_city ?? ""} />
+                  <input name="birth_city" type="text" defaultValue={profile?.birth_city ?? ""} required />
                 </label>
                 <label className="field">
                   <span>Estado</span>
-                  <input name="birth_state" type="text" defaultValue={profile?.birth_state ?? ""} />
+                  <input name="birth_state" type="text" defaultValue={profile?.birth_state ?? ""} required />
                 </label>
                 <label className="field">
                   <span>País</span>
-                  <input name="birth_country" type="text" defaultValue={profile?.birth_country ?? "Brasil"} />
+                  <input name="birth_country" type="text" defaultValue={profile?.birth_country ?? "Brasil"} required />
                 </label>
               </div>
 
-              <label className="consent-box compact-consent">
-                <input name="personalized_consent" type="checkbox" required />
-                <span>
-                  Autorizo o uso destes dados somente para minhas leituras,
-                  estudos e atendimento, conforme o <Link href="/privacidade">Aviso de Privacidade</Link>.
-                </span>
-              </label>
+              <p className="form-note">
+                Estes dados serão reutilizados somente em suas leituras, estudos e atendimento.
+              </p>
 
-              <button className="button primary" type="submit">Guardar meus dados</button>
+              <button className="button primary" type="submit">Atualizar meus dados</button>
             </form>
           </section>
         </div>

@@ -1139,6 +1139,31 @@ textarea {
   gap: 18px;
 }
 
+.account-mode {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.account-mode a {
+  padding: 12px 14px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.account-mode a + a {
+  border-left: 1px solid var(--line);
+}
+
+.account-mode a.active {
+  background: var(--gold);
+  color: #100d09;
+}
+
 .account-message {
   min-height: 270px;
   display: flex;
@@ -1297,6 +1322,26 @@ textarea {
   width: fit-content;
 }
 
+.onboarding-content {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.55fr) minmax(0, 1.45fr);
+  gap: clamp(36px, 7vw, 88px);
+  align-items: start;
+}
+
+.onboarding-intro h2 {
+  margin: 8px 0 16px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.08;
+}
+
+.onboarding-intro p,
+.form-note {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 .privacy-content {
   max-width: 840px;
 }
@@ -1325,7 +1370,8 @@ textarea {
 
 @media (max-width: 900px) {
   .account-entry-grid,
-  .library-items {
+  .library-items,
+  .onboarding-content {
     grid-template-columns: 1fr;
   }
 

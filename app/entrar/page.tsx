@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { isSupabaseConfigured } from "@/lib/env";
-import { sendAccessLink } from "./actions";
+import { createAccess, sendAccessLink } from "./actions";
 
 export const metadata: Metadata = {
   title: "Entrar na Biblioteca da Alma | Ars Akasha",
@@ -17,6 +17,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const sent = params.enviado === "1";
   const error = typeof params.erro === "string" ? params.erro : "";
   const email = typeof params.email === "string" ? params.email : "";
+  const isNewAccess = params.novo === "1";
   const configured = isSupabaseConfigured();
 
   return (
@@ -68,43 +69,71 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 </p>
               </div>
             ) : (
-              <form action={sendAccessLink} className="account-form">
+              <form
+                action={isNewAccess ? createAccess : sendAccessLink}
+                className="account-form"
+              >
                 <div>
-                  <span className="eyebrow">entrar ou criar acesso</span>
-                  <h2>Receba seu link por e-mail.</h2>
+                  <span className="eyebrow">
+                    {isNewAccess ? "primeiro acesso" : "já tenho acesso"}
+                  </span>
+                  <h2>
+                    {isNewAccess
+                      ? "Crie sua Biblioteca da Alma."
+                      : "Entre em sua biblioteca."}
+                  </h2>
+                </div>
+
+                <div className="account-mode" aria-label="Escolha de acesso">
+                  <Link className={!isNewAccess ? "active" : ""} href="/entrar">
+                    Já tenho acesso
+                  </Link>
+                  <Link className={isNewAccess ? "active" : ""} href="/entrar?novo=1">
+                    Primeiro acesso
+                  </Link>
                 </div>
 
                 {error ? (
                   <p className="form-error" role="alert">
                     {error === "dados"
-                      ? "Confira o e-mail e aceite o aviso de privacidade."
+                      ? isNewAccess
+                        ? "Preencha seu nome, confira o e-mail e aceite o aviso de privacidade."
+                        : "Confira o e-mail informado."
+                      : error === "acesso"
+                        ? "Não encontramos esse acesso. Escolha Primeiro acesso para criar sua biblioteca."
                       : "Não foi possível enviar o acesso agora. Tente novamente em alguns minutos."}
                   </p>
                 ) : null}
 
-                <label className="field">
-                  <span>Seu nome</span>
-                  <input name="full_name" type="text" autoComplete="name" />
-                </label>
+                {isNewAccess ? (
+                  <label className="field">
+                    <span>Nome completo</span>
+                    <input name="full_name" type="text" autoComplete="name" required />
+                  </label>
+                ) : null}
                 <label className="field">
                   <span>Seu melhor e-mail</span>
                   <input name="email" type="email" autoComplete="email" required />
                 </label>
 
-                <label className="consent-box compact-consent">
-                  <input name="privacy_accepted" type="checkbox" required />
-                  <span>
-                    Li e concordo com o <Link href="/privacidade">Aviso de Privacidade</Link>
-                    para criar meu acesso e guardar meus registros.
-                  </span>
-                </label>
-                <label className="consent-box compact-consent">
-                  <input name="marketing_email" type="checkbox" />
-                  <span>Quero receber novidades e novos conteúdos por e-mail.</span>
-                </label>
+                {isNewAccess ? (
+                  <>
+                    <label className="consent-box compact-consent">
+                      <input name="privacy_accepted" type="checkbox" required />
+                      <span>
+                        Li e concordo com o <Link href="/privacidade">Aviso de Privacidade</Link>
+                        para criar meu acesso e guardar meus registros.
+                      </span>
+                    </label>
+                    <label className="consent-box compact-consent">
+                      <input name="marketing_email" type="checkbox" />
+                      <span>Quero receber novidades e novos conteúdos por e-mail.</span>
+                    </label>
+                  </>
+                ) : null}
 
                 <button className="button primary submit-button" type="submit">
-                  Enviar meu link de acesso
+                  {isNewAccess ? "Criar meu acesso" : "Enviar meu link de acesso"}
                 </button>
               </form>
             )}
