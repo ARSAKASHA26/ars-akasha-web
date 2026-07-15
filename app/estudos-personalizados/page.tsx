@@ -107,6 +107,7 @@ export default async function EstudosPersonalizadosPage({ searchParams }: PagePr
             <form className="intake-card" action="/api/checkout" method="POST">
               <input name="study_id" type="hidden" value={selectedStudy.id} />
               <input name="study_focus" type="hidden" value={selectedStudy.name} />
+              <input name="consent_version" type="hidden" value="2026-07-14" />
 
               <div className="panel-heading">
                 <div>
@@ -179,7 +180,8 @@ export default async function EstudosPersonalizadosPage({ searchParams }: PagePr
                 <input name="consent" type="checkbox" required />
                 <span>
                   Autorizo a Ars Akasha a usar estes dados somente para preparar
-                  meu estudo e entrar em contato sobre este pedido.
+                  meu estudo e entrar em contato sobre este pedido, conforme o{" "}
+                  <Link href="/privacidade">Aviso de Privacidade</Link>.
                 </span>
               </label>
 

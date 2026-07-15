@@ -1,23 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPersonalizedStudyById } from "@/data/catalog";
 import { siteUrl } from "@/lib/env";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe";
 
 export const runtime = "nodejs";
-
-const metadataFields = [
-  "name",
-  "email",
-  "whatsapp",
-  "birth_date",
-  "birth_time",
-  "birth_city",
-  "birth_state",
-  "birth_country",
-  "study_id",
-  "study_focus",
-  "main_question"
-] as const;
 
 function readField(formData: FormData, field: string) {
   return String(formData.get(field) ?? "").trim();
@@ -37,9 +24,36 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const metadata = Object.fromEntries(
-    metadataFields.map((field) => [field, readField(formData, field).slice(0, 500)])
-  );
+  const supabaseAdmin = createSupabaseAdminClient();
+  let customerRequestId: string | null = null;
+
+  if (supabaseAdmin) {
+    const { data, error } = await supabaseAdmin
+      .from("customer_requests")
+      .insert({
+        study_id: study.id,
+        study_name: study.name,
+        amount_in_cents: study.priceInCents,
+        full_name: name.slice(0, 200),
+        email: email.slice(0, 320),
+        whatsapp: whatsapp.slice(0, 40),
+        birth_date: readField(formData, "birth_date") || null,
+        birth_time: readField(formData, "birth_time") || null,
+        birth_city: readField(formData, "birth_city").slice(0, 160) || null,
+        birth_state: readField(formData, "birth_state").slice(0, 120) || null,
+        birth_country: readField(formData, "birth_country").slice(0, 120) || null,
+        main_question: readField(formData, "main_question").slice(0, 5000) || null,
+        consent_version: readField(formData, "consent_version") || "2026-07-14"
+      })
+      .select("id")
+      .single();
+
+    if (error) {
+      console.error("Falha ao registrar pedido no Supabase:", error.message);
+    } else {
+      customerRequestId = data.id;
+    }
+  }
 
   if (!process.env.STRIPE_SECRET_KEY) {
     const phone = (process.env.ARS_AKASHA_WHATSAPP_NUMBER || "5544997038883").replace(
@@ -79,13 +93,24 @@ export async function POST(request: NextRequest) {
     customer_email: email,
     client_reference_id: email,
     metadata: {
-      ...metadata,
+      study_id: study.id,
       study_name: study.name,
-      study_price: study.priceLabel
+      customer_request_id: customerRequestId ?? "not-recorded"
     },
     success_url: `${siteUrl}/obrigado?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${siteUrl}/estudos-personalizados?estudo=${study.id}#pedido`
   });
+
+  if (supabaseAdmin && customerRequestId) {
+    const { error } = await supabaseAdmin
+      .from("customer_requests")
+      .update({ stripe_session_id: session.id })
+      .eq("id", customerRequestId);
+
+    if (error) {
+      console.error("Falha ao vincular pagamento ao pedido:", error.message);
+    }
+  }
 
   if (!session.url) {
     return NextResponse.json(

@@ -1,10 +1,13 @@
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 import { supabaseConfig } from "@/lib/env";
 
 export function createSupabaseBrowserClient() {
-  if (!supabaseConfig.url || !supabaseConfig.anonKey) {
+  if (!supabaseConfig.url || !supabaseConfig.publishableKey) {
     throw new Error("Variaveis publicas do Supabase nao configuradas.");
   }
 
-  return createClient(supabaseConfig.url, supabaseConfig.anonKey);
+  return createBrowserClient(
+    supabaseConfig.url,
+    supabaseConfig.publishableKey
+  );
 }
