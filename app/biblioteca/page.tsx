@@ -51,7 +51,6 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
     profile?.full_name &&
       profile?.whatsapp &&
       profile?.birth_date &&
-      profile?.birth_time &&
       profile?.birth_city &&
       profile?.birth_state &&
       profile?.birth_country &&
@@ -64,11 +63,11 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
         <section className="page-title account-title">
           <div className="container library-heading">
             <div>
-              <span className="eyebrow">seu primeiro acesso</span>
-              <h1>Complete seu cadastro</h1>
+              <span className="eyebrow">seu espaço na Ars Akasha</span>
+              <h1>Vamos preparar sua Biblioteca da Alma</h1>
               <p>
-                Preencha uma única vez. Seus dados ficarão guardados para suas
-                leituras, estudos e Biblioteca da Alma.
+                Preencha seus dados uma única vez. Assim, cada leitura, estudo
+                e entrega poderá encontrar o seu lugar aqui.
               </p>
             </div>
             <form action="/auth/sair" method="POST">
@@ -80,11 +79,11 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
         <section className="section" id="meus-dados">
           <div className="container onboarding-content">
             <div className="onboarding-intro">
-              <span className="eyebrow">cadastro único</span>
-              <h2>Seus dados acompanham você.</h2>
+              <span className="eyebrow">um cadastro, uma jornada</span>
+              <h2>Você não precisará começar do zero novamente.</h2>
               <p>
-                Assim você não precisará preencher as mesmas informações a cada
-                novo pedido.
+                Seus dados ficam guardados com cuidado para tornar os próximos
+                passos mais simples e pessoais.
               </p>
             </div>
 
@@ -119,7 +118,8 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
                 </label>
                 <label className="field">
                   <span>Hora de nascimento</span>
-                  <input name="birth_time" type="time" defaultValue={profile?.birth_time?.slice(0, 5) ?? ""} required />
+                  <input name="birth_time" type="time" defaultValue={profile?.birth_time?.slice(0, 5) ?? ""} />
+                  <small>Se não souber, deixe em branco.</small>
                 </label>
                 <label className="field">
                   <span>Cidade onde nasceu</span>
@@ -160,12 +160,12 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
       <section className="page-title account-title">
         <div className="container library-heading">
           <div>
-            <span className="eyebrow">seu espaço reservado</span>
-            <h1>Biblioteca da Alma</h1>
+            <span className="eyebrow">seu espaço na Ars Akasha</span>
+            <h1>Bem-vindo à sua Biblioteca da Alma</h1>
             <p>
               {profile?.full_name
-                ? `${profile.full_name}, aqui ficam os registros que acompanham sua jornada.`
-                : "Aqui ficam os registros que acompanham sua jornada."}
+                ? `${profile.full_name}, aqui você reúne suas leituras, pedidos e entregas em um só lugar.`
+                : "Aqui você reúne suas leituras, pedidos e entregas em um só lugar."}
             </p>
           </div>
           <form action="/auth/sair" method="POST">
@@ -213,13 +213,13 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
               </div>
             ) : (
               <div className="library-empty">
-                <h3>Sua biblioteca começa com o primeiro registro.</h3>
+                <h3>Comece pelo que faz sentido para você hoje.</h3>
                 <p>
-                  Quando você guardar uma leitura ou solicitar um estudo, ele
-                  aparecerá aqui.
+                  Sua primeira leitura, seus próximos estudos e tudo o que for
+                  preparado para você ficará reunido neste espaço.
                 </p>
                 <Link className="button primary" href="/leitura-gratuita">
-                  Conhecer meus primeiros sinais
+                  Começar minha leitura gratuita
                 </Link>
               </div>
             )}
@@ -265,7 +265,8 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
                 </label>
                 <label className="field">
                   <span>Hora de nascimento</span>
-                  <input name="birth_time" type="time" defaultValue={profile?.birth_time?.slice(0, 5) ?? ""} required />
+                  <input name="birth_time" type="time" defaultValue={profile?.birth_time?.slice(0, 5) ?? ""} />
+                  <small>Se não souber, deixe em branco.</small>
                 </label>
                 <label className="field">
                   <span>Cidade onde nasceu</span>

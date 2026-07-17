@@ -24,7 +24,6 @@ export async function updateProfile(formData: FormData) {
     value("full_name"),
     value("whatsapp"),
     value("birth_date"),
-    value("birth_time"),
     value("birth_city"),
     value("birth_state"),
     value("birth_country")
@@ -52,7 +51,7 @@ export async function updateProfile(formData: FormData) {
       full_name: value("full_name"),
       whatsapp: value("whatsapp"),
       birth_date: value("birth_date"),
-      birth_time: value("birth_time"),
+      birth_time: value("birth_time") || null,
       birth_city: value("birth_city"),
       birth_state: value("birth_state"),
       birth_country: value("birth_country")
