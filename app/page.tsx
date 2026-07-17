@@ -48,7 +48,7 @@ export default function HomePage() {
         <div className="container home-opening-grid">
           <div className="home-opening-copy">
             <span className="eyebrow">Ars Akasha | Biblioteca da Alma</span>
-            <h1>Estudos espirituais feitos para a sua história.</h1>
+            <h1>Estudos personalizados que começam com a sua história.</h1>
             <p>
               Há momentos em que não falta resposta: falta compreender o que
               está se repetindo, o que pede cuidado e qual caminho pode ser
