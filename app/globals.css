@@ -1283,6 +1283,109 @@ textarea {
   padding-left: 12px;
 }
 
+.premium-library {
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(216, 168, 74, 0.13), transparent 34%),
+    rgba(12, 9, 7, 0.68);
+}
+
+.premium-ebook-grid {
+  grid-template-columns: minmax(280px, 420px);
+}
+
+.premium-ebook-card {
+  border-color: rgba(241, 199, 105, 0.62);
+}
+
+.ebook-price {
+  display: block;
+  margin: 0 0 16px;
+  color: var(--accent-strong);
+  font-size: 1.35rem;
+}
+
+.ebook-actions.single-action {
+  grid-template-columns: 1fr;
+}
+
+.paid-ebook-title {
+  padding: clamp(54px, 8vw, 96px) 0;
+}
+
+.paid-ebook-hero {
+  display: grid;
+  grid-template-columns: minmax(260px, 390px) minmax(0, 1fr);
+  gap: clamp(36px, 7vw, 88px);
+  align-items: center;
+}
+
+.paid-ebook-cover {
+  position: relative;
+  aspect-ratio: 3 / 4.1;
+  overflow: hidden;
+  border: 1px solid rgba(241, 199, 105, 0.56);
+  border-radius: 8px;
+  background: #f4ead7;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.42);
+}
+
+.paid-ebook-cover img {
+  object-fit: cover;
+}
+
+.paid-ebook-intro h1 {
+  max-width: 820px;
+  margin: 12px 0;
+}
+
+.paid-ebook-subtitle {
+  color: var(--accent-strong) !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+}
+
+.paid-ebook-author {
+  margin-bottom: 8px !important;
+}
+
+.paid-ebook-price {
+  display: block;
+  margin: 22px 0;
+  color: var(--gold);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.paid-ebook-intro form,
+.paid-ebook-intro > .button {
+  margin-top: 28px;
+}
+
+.paid-ebook-delivery {
+  display: block;
+  max-width: 620px;
+  margin-top: 16px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.paid-ebook-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: clamp(36px, 7vw, 88px);
+  align-items: start;
+}
+
+.paid-ebook-content h2 {
+  margin: 10px 0 18px;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+}
+
+.paid-ebook-content p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
 .library-cta .button {
   width: fit-content;
 }
@@ -1909,6 +2012,15 @@ textarea {
 }
 
 @media (max-width: 760px) {
+  .paid-ebook-hero,
+  .paid-ebook-content {
+    grid-template-columns: 1fr;
+  }
+
+  .paid-ebook-cover {
+    width: min(100%, 390px);
+  }
+
   .library-heading,
   .library-section-heading {
     align-items: flex-start;

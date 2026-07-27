@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { isSupabaseConfigured } from "@/lib/env";
+import { isSupabaseConfigured, siteUrl } from "@/lib/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Ars Akasha",
   description:
     "Leituras simbólicas, estudos personalizados e biblioteca espiritual da Ars Akasha.",

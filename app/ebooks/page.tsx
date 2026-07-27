@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { freeEbooks } from "@/data/catalog";
+import { freeEbooks, paidEbooks } from "@/data/catalog";
 
 export const metadata: Metadata = {
-  title: "E-books gratuitos | Ars Akasha",
+  title: "E-books | Ars Akasha",
   description:
-    "Biblioteca gratuita da Ars Akasha com e-books sobre espiritualidade, orixás, anjos, Odus, mediunidade e autoconhecimento."
+    "E-books premium e gratuitos da Ars Akasha sobre espiritualidade, prosperidade consciente, autoconhecimento e tradições herméticas."
 };
 
 export default function EbooksPage() {
@@ -14,17 +14,60 @@ export default function EbooksPage() {
     <>
       <section className="page-title library-title">
         <div className="container">
-          <span className="eyebrow">biblioteca aberta</span>
-          <h1>E-books gratuitos</h1>
+          <span className="eyebrow">Biblioteca da Alma</span>
+          <h1>E-books</h1>
           <p>
-            Conhecimento para ler com calma, guardar e retomar quando uma
-            pergunta pedir mais profundidade. Escolha um título e comece pelo
-            tema que conversa com o seu momento.
+            Estudos autorais e leituras gratuitas para guardar, retomar e
+            aprofundar quando uma pergunta pedir mais consciência.
           </p>
-          <div className="library-count" aria-label={`${freeEbooks.length} títulos disponíveis`}>
-            <strong>{freeEbooks.length}</strong>
-            <span>títulos disponíveis gratuitamente</span>
+          <div
+            className="library-count"
+            aria-label={`${freeEbooks.length} títulos gratuitos e ${paidEbooks.length} premium`}
+          >
+            <strong>{freeEbooks.length + paidEbooks.length}</strong>
+            <span>títulos disponíveis na biblioteca</span>
           </div>
+        </div>
+      </section>
+
+      <section className="section premium-library">
+        <div className="container section-heading">
+          <span className="eyebrow">Ebooks Premium</span>
+          <h2>Estudos autorais para aprofundar a sua prática.</h2>
+          <p>
+            Obras completas da Ars Akasha, preparadas para leitura, estudo e
+            aplicação consciente.
+          </p>
+        </div>
+
+        <div className="container ebook-grid premium-ebook-grid">
+          {paidEbooks.map((ebook) => (
+            <article className="ebook-card premium-ebook-card" key={ebook.id}>
+              <div className="ebook-cover">
+                <Image
+                  src={ebook.coverPath}
+                  alt={`Capa do e-book ${ebook.name}`}
+                  fill
+                  sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                />
+                <span>{ebook.category}</span>
+              </div>
+              <div className="ebook-copy">
+                <small>{ebook.author}</small>
+                <h2>{ebook.name}</h2>
+                <strong className="ebook-price">{ebook.priceLabel}</strong>
+                <p>{ebook.summary}</p>
+                <div className="ebook-actions single-action">
+                  <Link
+                    className="button primary"
+                    href={`/ebooks/${ebook.id}`}
+                  >
+                    Conhecer o e-book
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
