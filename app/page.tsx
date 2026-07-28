@@ -120,12 +120,12 @@ export default function HomePage() {
           <Link className="home-path-card" href="/ebooks">
             <span className="path-number">02</span>
             <span className="eyebrow">Biblioteca gratuita</span>
-            <h3>E-books</h3>
+            <h3>E-books gratuitos</h3>
             <p>
               Dezenove leituras para aprofundar temas da Ars Akasha com calma,
               sem cadastro e no seu próprio ritmo.
             </p>
-            <strong>Explorar e-books</strong>
+            <strong>Explorar e-books gratuitos</strong>
           </Link>
 
           <article className="home-path-card upcoming">

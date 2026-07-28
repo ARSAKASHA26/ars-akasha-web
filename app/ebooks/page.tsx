@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { freeEbooks, paidEbooks } from "@/data/catalog";
+import { freeEbooks } from "@/data/catalog";
 
 export const metadata: Metadata = {
-  title: "E-books | Ars Akasha",
+  title: "E-books gratuitos | Ars Akasha",
   description:
-    "E-books premium e gratuitos da Ars Akasha sobre espiritualidade, prosperidade consciente, autoconhecimento e tradições herméticas."
+    "E-books gratuitos da Ars Akasha sobre espiritualidade, autoconhecimento e tradições herméticas para ler ou baixar livremente."
 };
 
 export default function EbooksPage() {
@@ -15,59 +15,18 @@ export default function EbooksPage() {
       <section className="page-title library-title">
         <div className="container">
           <span className="eyebrow">Biblioteca da Alma</span>
-          <h1>E-books</h1>
+          <h1>E-books gratuitos</h1>
           <p>
-            Estudos autorais e leituras gratuitas para guardar, retomar e
-            aprofundar quando uma pergunta pedir mais consciência.
+            Leituras para guardar, retomar e aprofundar quando uma pergunta
+            pedir mais consciência.
           </p>
           <div
             className="library-count"
-            aria-label={`${freeEbooks.length} títulos gratuitos e ${paidEbooks.length} premium`}
+            aria-label={`${freeEbooks.length} títulos gratuitos`}
           >
-            <strong>{freeEbooks.length + paidEbooks.length}</strong>
-            <span>títulos disponíveis na biblioteca</span>
+            <strong>{freeEbooks.length}</strong>
+            <span>títulos gratuitos disponíveis</span>
           </div>
-        </div>
-      </section>
-
-      <section className="section premium-library">
-        <div className="container section-heading">
-          <span className="eyebrow">Ebooks Premium</span>
-          <h2>Estudos autorais para aprofundar a sua prática.</h2>
-          <p>
-            Obras completas da Ars Akasha, preparadas para leitura, estudo e
-            aplicação consciente.
-          </p>
-        </div>
-
-        <div className="container ebook-grid premium-ebook-grid">
-          {paidEbooks.map((ebook) => (
-            <article className="ebook-card premium-ebook-card" key={ebook.id}>
-              <div className="ebook-cover">
-                <Image
-                  src={ebook.coverPath}
-                  alt={`Capa do e-book ${ebook.name}`}
-                  fill
-                  sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 33vw"
-                />
-                <span>{ebook.category}</span>
-              </div>
-              <div className="ebook-copy">
-                <small>{ebook.author}</small>
-                <h2>{ebook.name}</h2>
-                <strong className="ebook-price">{ebook.priceLabel}</strong>
-                <p>{ebook.summary}</p>
-                <div className="ebook-actions single-action">
-                  <Link
-                    className="button primary"
-                    href={`/ebooks/${ebook.id}`}
-                  >
-                    Conhecer o e-book
-                  </Link>
-                </div>
-              </div>
-            </article>
-          ))}
         </div>
       </section>
 
@@ -118,15 +77,14 @@ export default function EbooksPage() {
 
       <section className="section closing-cta">
         <div className="container cta-panel library-cta">
-          <span className="eyebrow">quando a leitura pede algo pessoal</span>
-          <h2>Um e-book apresenta o tema. Um estudo olha para a sua história.</h2>
+          <span className="eyebrow">continue aprofundando</span>
+          <h2>Conheça também os e-books pagos da Ars Akasha.</h2>
           <p>
-            Se você deseja compreender como uma dessas forças se relaciona com
-            seus dados, escolhas e momento de vida, conheça os estudos
-            personalizados da Ars Akasha.
+            Obras autorais mais extensas, preparadas para quem deseja estudar
+            cada tema com mais profundidade e aplicação consciente.
           </p>
-          <Link className="button primary" href="/estudos-personalizados">
-            Conhecer os estudos
+          <Link className="button primary" href="/ebooks-pagos">
+            Ver e-books pagos
           </Link>
         </div>
       </section>

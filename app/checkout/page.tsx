@@ -27,8 +27,8 @@ export default function CheckoutPage() {
               <Link className="button primary" href="/estudos-personalizados">
                 Escolher meu estudo
               </Link>
-              <Link className="button light" href="/ebooks">
-                Ver e-books
+              <Link className="button light" href="/ebooks-pagos">
+                Ver e-books pagos
               </Link>
             </div>
           </div>

@@ -45,7 +45,8 @@ export default async function RootLayout({
                 </Link>
                 <div className="nav-links">
                   <Link href="/estudos-personalizados">Estudos</Link>
-                  <Link href="/ebooks">E-books</Link>
+                  <Link href="/ebooks">E-books gratuitos</Link>
+                  <Link href="/ebooks-pagos">E-books pagos</Link>
                   <Link href="/leitura-gratuita">Leitura gratuita</Link>
                   <Link
                     className="nav-account"
